@@ -5,7 +5,8 @@
 
 ## Releases 
 
-## Kevin Saner
+## Kevin Saner *Lars
+
 
 ### [3.4.0](https://github.com/DigiBP/digibp-camunda-template/tree/3.4.0)
 - Updating Camunda to 7.12.0
