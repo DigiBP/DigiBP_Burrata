@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_11ein20" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.6.0">
+  <bpmn:collaboration id="Collaboration_1n15fow">
+    <bpmn:participant id="Participant_07rtlv4" name="Schedule appointment" processRef="Process_1udm11e" />
+    <bpmn:participant id="Participant_0jo378h" name="Patient" />
+    <bpmn:messageFlow id="MessageFlow_0p19el2" name="Phone call" sourceRef="Participant_0jo378h" targetRef="StartEvent_1" />
+    <bpmn:messageFlow id="MessageFlow_1nfucor" name="Appointment confirmation" sourceRef="Task_0bada0a" targetRef="Participant_0jo378h" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1udm11e" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1" name="Need of doctors consultation">
+      <bpmn:outgoing>SequenceFlow_0zzf18q</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1x1phe5" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_0qdtlyi" name="Appointment scheduled">
+      <bpmn:incoming>SequenceFlow_0rw5sat</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0zzf18q" sourceRef="StartEvent_1" targetRef="Task_0fai0ys" />
+    <bpmn:sequenceFlow id="SequenceFlow_1wzx4dp" sourceRef="Task_0fai0ys" targetRef="Task_0bada0a" />
+    <bpmn:sequenceFlow id="SequenceFlow_0rw5sat" sourceRef="Task_0bada0a" targetRef="EndEvent_0qdtlyi" />
+    <bpmn:manualTask id="Task_0bada0a" name="Inform patient about appointment and schedule in calendar">
+      <bpmn:incoming>SequenceFlow_1wzx4dp</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0rw5sat</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1mmhuj5">
+        <bpmn:targetRef>DataStoreReference_0ojmra5</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Task_0fai0ys" name="Schedule doctors appointment">
+      <bpmn:incoming>SequenceFlow_0zzf18q</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1wzx4dp</bpmn:outgoing>
+      <bpmn:property id="Property_0r8yaio" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1fd1w3o">
+        <bpmn:sourceRef>DataStoreReference_0ojmra5</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0r8yaio</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:manualTask>
+    <bpmn:dataStoreReference id="DataStoreReference_0ojmra5" name="Doctors calendar" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1n15fow">
+      <bpmndi:BPMNShape id="Participant_07rtlv4_di" bpmnElement="Participant_07rtlv4" isHorizontal="true">
+        <dc:Bounds x="150" y="240" width="661" height="290" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_12luuub_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="233" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="213" y="385" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_0p19el2_di" bpmnElement="MessageFlow_0p19el2">
+        <di:waypoint x="251" y="160" />
+        <di:waypoint x="251" y="342" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="264" y="203" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0zzf18q_di" bpmnElement="SequenceFlow_0zzf18q">
+        <di:waypoint x="269" y="360" />
+        <di:waypoint x="340" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0qdtlyi_di" bpmnElement="EndEvent_0qdtlyi">
+        <dc:Bounds x="723" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="711" y="385" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1ysqkt9_di" bpmnElement="Participant_0jo378h" isHorizontal="true">
+        <dc:Bounds x="150" y="100" width="661" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_1nfucor_di" bpmnElement="MessageFlow_1nfucor">
+        <di:waypoint x="571" y="320" />
+        <di:waypoint x="571" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="579" y="196" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1wzx4dp_di" bpmnElement="SequenceFlow_1wzx4dp">
+        <di:waypoint x="440" y="360" />
+        <di:waypoint x="521" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0rw5sat_di" bpmnElement="SequenceFlow_0rw5sat">
+        <di:waypoint x="621" y="360" />
+        <di:waypoint x="723" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ManualTask_0wvozaa_di" bpmnElement="Task_0fai0ys">
+        <dc:Bounds x="340" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ManualTask_17g1ae9_di" bpmnElement="Task_0bada0a">
+        <dc:Bounds x="521" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0ojmra5_di" bpmnElement="DataStoreReference_0ojmra5">
+        <dc:Bounds x="435" y="435" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="420" y="492" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1fd1w3o_di" bpmnElement="DataInputAssociation_1fd1w3o">
+        <di:waypoint x="435" y="435" />
+        <di:waypoint x="400" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1mmhuj5_di" bpmnElement="DataOutputAssociation_1mmhuj5">
+        <di:waypoint x="531" y="400" />
+        <di:waypoint x="485" y="445" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
