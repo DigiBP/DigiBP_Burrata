@@ -17,12 +17,12 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_1gh5r9y" name="Doctor">
         <bpmn:flowNodeRef>IntermediateThrowEvent_0vdut6c</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1ozo7s8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_1jxoimm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_06l57t7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0vp0dut</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1ozo7s8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1av7p0y</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1claoad</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_0vp0dut</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1kv525s" name="Time of consultation has come">
@@ -34,13 +34,6 @@
       <bpmn:outgoing>SequenceFlow_0oscyy7</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_074o6qu" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:subProcess id="Task_1ozo7s8" name="Consultation">
-      <bpmn:incoming>SequenceFlow_0oscyy7</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1dpnkpk</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_1tepk6x">
-        <bpmn:targetRef>DataObjectReference_1gzey4k</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:subProcess>
     <bpmn:sequenceFlow id="SequenceFlow_17bmzx3" sourceRef="Task_0bcbij0" targetRef="IntermediateThrowEvent_0vdut6c" />
     <bpmn:sequenceFlow id="SequenceFlow_0oscyy7" sourceRef="IntermediateThrowEvent_0vdut6c" targetRef="Task_1ozo7s8" />
     <bpmn:sequenceFlow id="SequenceFlow_1dpnkpk" sourceRef="Task_1ozo7s8" targetRef="Task_1av7p0y" />
@@ -59,17 +52,6 @@
       <bpmn:outgoing>SequenceFlow_08r3w4i</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1nx8ris</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:task id="Task_1av7p0y" name="Inform patient about diagnosis">
-      <bpmn:incoming>SequenceFlow_1dpnkpk</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1sbs1ga</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Task_1claoad" name="Issue prescription">
-      <bpmn:incoming>SequenceFlow_08r3w4i</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1d3pngp</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_1szmdzi">
-        <bpmn:targetRef>DataObjectReference_145dvh2</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:task>
     <bpmn:manualTask id="Task_0bcbij0" name="Collect patient data">
       <bpmn:incoming>SequenceFlow_08x7b1k</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17bmzx3</bpmn:outgoing>
@@ -85,6 +67,24 @@
     <bpmn:sequenceFlow id="SequenceFlow_08x7b1k" sourceRef="StartEvent_1kv525s" targetRef="Task_0bcbij0" />
     <bpmn:dataObjectReference id="DataObjectReference_145dvh2" name="Prescription" dataObjectRef="DataObject_171zyhc" />
     <bpmn:dataObject id="DataObject_171zyhc" />
+    <bpmn:subProcess id="Task_1ozo7s8" name="Consultation">
+      <bpmn:incoming>SequenceFlow_0oscyy7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1dpnkpk</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1tepk6x">
+        <bpmn:targetRef>DataObjectReference_1gzey4k</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:subProcess>
+    <bpmn:manualTask id="Task_1av7p0y" name="Inform patient about diagnosis">
+      <bpmn:incoming>SequenceFlow_1dpnkpk</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1sbs1ga</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Task_1claoad" name="Issue prescription">
+      <bpmn:incoming>SequenceFlow_08r3w4i</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1d3pngp</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1szmdzi">
+        <bpmn:targetRef>DataObjectReference_145dvh2</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_05db1ho">
@@ -117,7 +117,7 @@
         <di:waypoint x="320" y="250" />
         <di:waypoint x="320" y="140" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="301" y="163" width="18" height="14" />
+          <dc:Bounds x="291" y="163" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_0z3d7h4_di" bpmnElement="MessageFlow_0z3d7h4">
@@ -137,19 +137,10 @@
           <dc:Bounds x="420" y="545" width="80" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="SubProcess_0my0isc_di" bpmnElement="Task_1ozo7s8">
-        <dc:Bounds x="540" y="480" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_1av7p0y_di" bpmnElement="Task_1av7p0y">
-        <dc:Bounds x="700" y="480" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1dpnkpk_di" bpmnElement="SequenceFlow_1dpnkpk">
         <di:waypoint x="640" y="520" />
         <di:waypoint x="700" y="520" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1claoad_di" bpmnElement="Task_1claoad">
-        <dc:Bounds x="910" y="410" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_08r3w4i_di" bpmnElement="SequenceFlow_08r3w4i">
         <di:waypoint x="880" y="495" />
         <di:waypoint x="880" y="450" />
@@ -240,6 +231,15 @@
         <di:waypoint x="1072" y="430" />
         <di:waypoint x="1072" y="355" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SubProcess_09ynjlw_di" bpmnElement="Task_1ozo7s8">
+        <dc:Bounds x="540" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ManualTask_0psl2nc_di" bpmnElement="Task_1av7p0y">
+        <dc:Bounds x="700" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ManualTask_10wom3p_di" bpmnElement="Task_1claoad">
+        <dc:Bounds x="910" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

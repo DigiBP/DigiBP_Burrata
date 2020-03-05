@@ -17,13 +17,6 @@
     <bpmn:sequenceFlow id="SequenceFlow_0zzf18q" sourceRef="StartEvent_1" targetRef="Task_0fai0ys" />
     <bpmn:sequenceFlow id="SequenceFlow_1wzx4dp" sourceRef="Task_0fai0ys" targetRef="Task_0bada0a" />
     <bpmn:sequenceFlow id="SequenceFlow_0rw5sat" sourceRef="Task_0bada0a" targetRef="EndEvent_0qdtlyi" />
-    <bpmn:manualTask id="Task_0bada0a" name="Inform patient about appointment and schedule in calendar">
-      <bpmn:incoming>SequenceFlow_1wzx4dp</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0rw5sat</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_1mmhuj5">
-        <bpmn:targetRef>DataStoreReference_0ojmra5</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:manualTask>
     <bpmn:manualTask id="Task_0fai0ys" name="Schedule doctors appointment">
       <bpmn:incoming>SequenceFlow_0zzf18q</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1wzx4dp</bpmn:outgoing>
@@ -34,6 +27,13 @@
       </bpmn:dataInputAssociation>
     </bpmn:manualTask>
     <bpmn:dataStoreReference id="DataStoreReference_0ojmra5" name="Doctors calendar" />
+    <bpmn:manualTask id="Task_0bada0a" name="Inform patient about appointment and schedule in calendar">
+      <bpmn:incoming>SequenceFlow_1wzx4dp</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0rw5sat</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1mmhuj5">
+        <bpmn:targetRef>DataStoreReference_0ojmra5</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1n15fow">
