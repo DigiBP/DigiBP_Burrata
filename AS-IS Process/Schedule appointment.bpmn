@@ -6,7 +6,15 @@
     <bpmn:messageFlow id="MessageFlow_0p19el2" name="Phone call" sourceRef="Participant_0jo378h" targetRef="StartEvent_1" />
     <bpmn:messageFlow id="MessageFlow_1nfucor" name="Appointment confirmation" sourceRef="Task_0bada0a" targetRef="Participant_0jo378h" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1udm11e" isExecutable="false">
+  <bpmn:process id="Process_1udm11e" name="" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_07p43ey">
+      <bpmn:lane id="Lane_0ij2v2g" name="Medical assisstant">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0qdtlyi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0bada0a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0fai0ys</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1" name="Need of doctors consultation">
       <bpmn:outgoing>SequenceFlow_0zzf18q</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1x1phe5" />
@@ -101,6 +109,9 @@
         <di:waypoint x="531" y="400" />
         <di:waypoint x="485" y="445" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Lane_0ij2v2g_di" bpmnElement="Lane_0ij2v2g" isHorizontal="true">
+        <dc:Bounds x="180" y="240" width="631" height="290" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

@@ -11,7 +11,7 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_13m8m0d" isExecutable="true">
     <bpmn:laneSet id="LaneSet_0iv1kxq">
-      <bpmn:lane id="Lane_0r56mee" name="Medical assisstent">
+      <bpmn:lane id="Lane_0r56mee" name="Medical assisstant">
         <bpmn:flowNodeRef>StartEvent_1kv525s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0bcbij0</bpmn:flowNodeRef>
       </bpmn:lane>
