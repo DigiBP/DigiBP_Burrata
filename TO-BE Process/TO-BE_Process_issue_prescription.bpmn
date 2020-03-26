@@ -5,36 +5,20 @@
     <bpmn:participant id="Participant_0114gdi" name="Medical chat bot service" />
     <bpmn:messageFlow id="MessageFlow_1t4hvuk" sourceRef="Participant_0114gdi" targetRef="StartEvent_1" />
     <bpmn:messageFlow id="MessageFlow_13hipwf" name="provide prescription" sourceRef="Task_1ecwzv1" targetRef="Participant_0114gdi" />
-    <bpmn:messageFlow id="MessageFlow_0t055b3" name="provide feedback" sourceRef="Task_03qfwvj" targetRef="Participant_0114gdi" />
+    <bpmn:messageFlow id="MessageFlow_0t055b3" name="provide feedback" sourceRef="Collaboration_0n7y8k6" targetRef="Participant_0114gdi" />
   </bpmn:collaboration>
   <bpmn:process id="Process_19p6wbr" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1ydo60j">
       <bpmn:lane id="Lane_0a1irux" name="Doctor">
-        <bpmn:flowNodeRef>Task_0kvyrqj</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1ecwzv1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0bfrm81</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_0ggq3vq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_0lo2gk9</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_03qfwvj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Collaboration_0n7y8k6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0kvyrqj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1ecwzv1</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:task id="Task_0kvyrqj" name="Check collected information and prescription">
-      <bpmn:incoming>SequenceFlow_0e47u3d</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1r84jwf</bpmn:outgoing>
-      <bpmn:property id="Property_1nqgre3" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_1gp5fdx">
-        <bpmn:sourceRef>DataObjectReference_0v5fg65</bpmn:sourceRef>
-        <bpmn:targetRef>Property_1nqgre3</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-    </bpmn:task>
-    <bpmn:task id="Task_1ecwzv1" name="Confirm/Update and issue prescription">
-      <bpmn:incoming>SequenceFlow_132pcww</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1qyuh10</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0s90sdj">
-        <bpmn:targetRef>DataObjectReference_1g82hma</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:task>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0bfrm81" name="Proposed prescription approved?">
       <bpmn:incoming>SequenceFlow_1r84jwf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_132pcww</bpmn:outgoing>
@@ -52,7 +36,7 @@
     <bpmn:endEvent id="EndEvent_0lo2gk9" name="Appointment scheduled">
       <bpmn:incoming>SequenceFlow_18im1ym</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:subProcess id="Task_03qfwvj" name="Schedule doctors appointment">
+    <bpmn:subProcess id="Collaboration_0n7y8k6" name="Schedule doctors appointment">
       <bpmn:incoming>SequenceFlow_0rys9bx</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_18im1ym</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0y3c84y">
@@ -63,10 +47,26 @@
     <bpmn:sequenceFlow id="SequenceFlow_1qyuh10" sourceRef="Task_1ecwzv1" targetRef="EndEvent_0ggq3vq" />
     <bpmn:sequenceFlow id="SequenceFlow_132pcww" name="yes" sourceRef="ExclusiveGateway_0bfrm81" targetRef="Task_1ecwzv1" />
     <bpmn:sequenceFlow id="SequenceFlow_1r84jwf" sourceRef="Task_0kvyrqj" targetRef="ExclusiveGateway_0bfrm81" />
-    <bpmn:sequenceFlow id="SequenceFlow_0rys9bx" name="no" sourceRef="ExclusiveGateway_0bfrm81" targetRef="Task_03qfwvj" />
-    <bpmn:sequenceFlow id="SequenceFlow_18im1ym" sourceRef="Task_03qfwvj" targetRef="EndEvent_0lo2gk9" />
+    <bpmn:sequenceFlow id="SequenceFlow_0rys9bx" name="no" sourceRef="ExclusiveGateway_0bfrm81" targetRef="Collaboration_0n7y8k6" />
+    <bpmn:sequenceFlow id="SequenceFlow_18im1ym" sourceRef="Collaboration_0n7y8k6" targetRef="EndEvent_0lo2gk9" />
     <bpmn:dataObjectReference id="DataObjectReference_1g82hma" name="Doctors feedback" dataObjectRef="DataObject_0dh9ia8" />
     <bpmn:dataObject id="DataObject_0dh9ia8" />
+    <bpmn:manualTask id="Task_0kvyrqj" name="Check collected information and prescription">
+      <bpmn:incoming>SequenceFlow_0e47u3d</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1r84jwf</bpmn:outgoing>
+      <bpmn:property id="Property_0x50fw9" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1gp5fdx">
+        <bpmn:sourceRef>DataObjectReference_0v5fg65</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0x50fw9</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Task_1ecwzv1" name="Confirm/Update and issue prescription">
+      <bpmn:incoming>SequenceFlow_132pcww</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1qyuh10</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0s90sdj">
+        <bpmn:targetRef>DataObjectReference_1g82hma</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0mairvy">
@@ -79,16 +79,10 @@
           <dc:Bounds x="205" y="405" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0kvyrqj_di" bpmnElement="Task_0kvyrqj">
-        <dc:Bounds x="330" y="340" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0e47u3d_di" bpmnElement="SequenceFlow_0e47u3d">
         <di:waypoint x="268" y="380" />
         <di:waypoint x="330" y="380" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1ecwzv1_di" bpmnElement="Task_1ecwzv1">
-        <dc:Bounds x="570" y="340" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_0v5fg65_di" bpmnElement="DataObjectReference_0v5fg65">
         <dc:Bounds x="362" y="245" width="36" height="50" />
         <bpmndi:BPMNLabel>
@@ -181,11 +175,17 @@
         <di:waypoint x="822" y="460" />
         <di:waypoint x="822" y="300" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="SubProcess_06xylaw_di" bpmnElement="Task_03qfwvj">
+      <bpmndi:BPMNShape id="SubProcess_06xylaw_di" bpmnElement="Collaboration_0n7y8k6">
         <dc:Bounds x="700" y="440" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0a1irux_di" bpmnElement="Lane_0a1irux" isHorizontal="true">
         <dc:Bounds x="182" y="220" width="798" height="330" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ManualTask_191fdx3_di" bpmnElement="Task_0kvyrqj">
+        <dc:Bounds x="330" y="340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ManualTask_0tbc6og_di" bpmnElement="Task_1ecwzv1">
+        <dc:Bounds x="570" y="340" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
