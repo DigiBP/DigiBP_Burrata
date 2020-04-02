@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_1873fa9" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.6.0">
+  <decision id="Decision_0v2zxuz" name="Consultation needed">
+    <extensionElements>
+      <biodi:bounds x="150" y="150" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+      <input id="input_1" label="Fever">
+        <inputExpression id="inputExpression_1" typeRef="boolean" expressionLanguage="JavaScript">
+          <text>fever</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_07xczkf" label="Temperature">
+        <inputExpression id="LiteralExpression_0re9i7z" typeRef="double" expressionLanguage="JavaScript">
+          <text>temperature</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1wbngct" label="Fracture">
+        <inputExpression id="LiteralExpression_0f4bfas" typeRef="boolean" expressionLanguage="JavaScript">
+          <text>fracture</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ka755b" label="Head injury">
+        <inputExpression id="LiteralExpression_1b6hbn2" typeRef="boolean" expressionLanguage="JavaScript">
+          <text>headInjury</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_07xhl34" label="Pre-existing condition">
+        <inputExpression id="LiteralExpression_11x9tv5" typeRef="boolean" expressionLanguage="JavaScript">
+          <text>preCondition</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Consultation needed" name="consultation" typeRef="boolean" />
+      <rule id="DecisionRule_0pgbgmq">
+        <description>High Fever</description>
+        <inputEntry id="UnaryTests_15sq5ow">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_09lq9di">
+          <text>&gt; 39.5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v26p10">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rrdvot">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vmuryb">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_122qaia">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_11okcpw">
+        <description>Broken Bone</description>
+        <inputEntry id="UnaryTests_1jkkynt">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06d6aih">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1n2w4fv">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lrwwqj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08pxe1l">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07xvnu1">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1afn5ny">
+        <description>Head Injury</description>
+        <inputEntry id="UnaryTests_1mplpe4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1deqpyy">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1pzi0sj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03x4edt">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_186e449">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0drnho6">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ntgndm">
+        <description>Pre-Condition</description>
+        <inputEntry id="UnaryTests_1c6j55i">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ooxpjw">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ocnb82">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13w6zli">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1f9gvw9">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1psj47w">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1paqj81">
+        <inputEntry id="UnaryTests_0oqaty8">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1h22uw7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0owtoi8">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cn318a">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f3xt6p">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1l1iayy">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
