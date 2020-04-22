@@ -127,6 +127,7 @@
             <camunda:value id="minor" name="minor" />
             <camunda:value id="major" name="major" />
           </camunda:formField>
+          <camunda:formField id="treatment" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_18ehj8f</bpmn:incoming>
