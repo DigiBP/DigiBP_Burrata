@@ -103,6 +103,9 @@
           <camunda:formField id="headInjury" label="Head Injury" type="boolean" />
           <camunda:formField id="preCondition" label="Pre-Condition" type="boolean" />
         </camunda:formData>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="name">$name</camunda:outputParameter>
+        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1pc3za2</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ru8evi</bpmn:outgoing>

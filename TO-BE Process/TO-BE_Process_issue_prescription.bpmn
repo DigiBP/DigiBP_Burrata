@@ -4,7 +4,6 @@
     <bpmn:participant id="Participant_13ccd2t" name="Issue presciption" processRef="Process_19p6wbr" />
     <bpmn:participant id="Participant_0114gdi" name="Medical chat bot service" />
     <bpmn:messageFlow id="MessageFlow_13hipwf" name="provide prescription" sourceRef="Task_1ecwzv1" targetRef="Participant_0114gdi" />
-    <bpmn:messageFlow id="MessageFlow_0t055b3" name="provide feedback" sourceRef="Collaboration_0n7y8k6" targetRef="Participant_0114gdi" />
   </bpmn:collaboration>
   <bpmn:process id="Process_19p6wbr" name="Issue Prescription" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1ydo60j">
@@ -70,13 +69,13 @@
         <bpmn:targetRef>DataObjectReference_1g82hma</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:userTask id="Collaboration_0n7y8k6" name="Schedule doctors appointment">
+    <bpmn:callActivity id="Collaboration_0n7y8k6" name="Schedule doctors appointment" calledElement="Process_10qbc26">
       <bpmn:incoming>SequenceFlow_0rys9bx</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_18im1ym</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0y3c84y">
         <bpmn:targetRef>DataObjectReference_1g82hma</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
-    </bpmn:userTask>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmn:message id="Message_0tunxcb" name="Message_3epjcs3" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -153,13 +152,6 @@
           <dc:Bounds x="631" y="166" width="57" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="MessageFlow_0t055b3_di" bpmnElement="MessageFlow_0t055b3">
-        <di:waypoint x="750" y="440" />
-        <di:waypoint x="750" y="140" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="757" y="173" width="85" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="DataObjectReference_1g82hma_di" bpmnElement="DataObjectReference_1g82hma">
         <dc:Bounds x="802" y="250" width="36" height="50" />
         <bpmndi:BPMNLabel>
@@ -191,7 +183,7 @@
       <bpmndi:BPMNShape id="UserTask_0ks5p85_di" bpmnElement="Task_1ecwzv1">
         <dc:Bounds x="570" y="340" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0gxaqiq_di" bpmnElement="Collaboration_0n7y8k6">
+      <bpmndi:BPMNShape id="CallActivity_17401yv_di" bpmnElement="Collaboration_0n7y8k6">
         <dc:Bounds x="700" y="440" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
