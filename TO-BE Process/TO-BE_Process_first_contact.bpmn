@@ -10,7 +10,7 @@
     <bpmn:messageFlow id="MessageFlow_0o8gttv" sourceRef="Participant_0ccwrsk" targetRef="Task_0jcyjgo" />
     <bpmn:messageFlow id="MessageFlow_1jt7bfw" name="Identification in a form of an interview" sourceRef="Task_18hmezq" targetRef="Participant_0ccwrsk" />
     <bpmn:messageFlow id="MessageFlow_1mpn1x6" sourceRef="Task_0ca0ppz" targetRef="Participant_0ccwrsk" />
-    <bpmn:messageFlow id="MessageFlow_0x4szn5" sourceRef="Participant_0ccwrsk" targetRef="Task_1lzbwgh" />
+    <bpmn:messageFlow id="MessageFlow_0x4szn5" sourceRef="Participant_0ccwrsk" targetRef="Task_02243hs" />
   </bpmn:collaboration>
   <bpmn:process id="Process_0qknjwj" name="Medical assistance consultation" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1107lat">
@@ -24,18 +24,24 @@
         <bpmn:flowNodeRef>Task_02n2blh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1ydaxbl</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_10ktv7c</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0jcyjgo</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0ca0ppz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0g8obrv</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0wo0p2e</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_18hmezq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0ca0ppz</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0jcyjgo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1lzbwgh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_02243hs</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1buq12g" name="Need of doctors consultation">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="insuranceNumber" label="Insurance Number" type="string" defaultValue="0" />
+          <camunda:formField id="fever" label="Fever" type="boolean" />
+          <camunda:formField id="temperature" label="Temperature" type="long" defaultValue="0" />
+          <camunda:formField id="fracture" label="Fracture" type="boolean" />
+          <camunda:formField id="headInjury" label="Head Injury" type="boolean" />
+          <camunda:formField id="preCondition" label="Pre-Condition" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_1pc3za2</bpmn:outgoing>
@@ -80,26 +86,6 @@
       <bpmn:outgoing>SequenceFlow_18ehj8f</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_01qkoij</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_0jcyjgo" name="Diagnose condition in detail">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="RecheckedCondition" label="Detailed Condition - approval" type="enum">
-            <camunda:value id="minor" name="minor" />
-            <camunda:value id="major" name="major" />
-          </camunda:formField>
-          <camunda:formField id="treatment" type="string" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_18ehj8f</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1d1fjfd</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:task id="Task_0ca0ppz" name="Determine treatment and inform patient">
-      <bpmn:incoming>SequenceFlow_1d1fjfd</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1ys78tw</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_17osm04">
-        <bpmn:targetRef>DataObjectReference_1djlimb</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:task>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0g8obrv" name="Diagnosis successful?">
       <bpmn:incoming>SequenceFlow_1ys78tw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dn5e87</bpmn:outgoing>
@@ -136,7 +122,7 @@
       <bpmn:outgoing>SequenceFlow_0l1ob3h</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0oz5j4k</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0oz5j4k" name="no" sourceRef="ExclusiveGateway_0wo0p2e" targetRef="Task_1lzbwgh">
+    <bpmn:sequenceFlow id="SequenceFlow_0oz5j4k" name="no" sourceRef="ExclusiveGateway_0wo0p2e" targetRef="Task_02243hs">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${patientName == null}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0fcr7we" sourceRef="Task_1lzbwgh" targetRef="Task_1ydaxbl" />
@@ -172,6 +158,32 @@ pizzaList=object.PizzaMenu;</camunda:script>
         <bpmn:targetRef>DataStoreReference_1ot8fdd</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
+    <bpmn:task id="Task_0ca0ppz" name="Determine treatment and inform patient">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="treatment">something</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1d1fjfd</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1ys78tw</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_17osm04">
+        <bpmn:targetRef>DataObjectReference_1djlimb</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:userTask id="Task_0jcyjgo" name="Diagnose condition in detail">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="RecheckedCondition" label="Detailed Condition - approval" type="enum">
+            <camunda:value id="minor" name="minor" />
+            <camunda:value id="major" name="major" />
+          </camunda:formField>
+          <camunda:formField id="treatment" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_18ehj8f</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1d1fjfd</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0mtjs1q" sourceRef="Task_02243hs" targetRef="Task_1lzbwgh" />
     <bpmn:serviceTask id="Task_1lzbwgh" name="Create new account">
       <bpmn:extensionElements>
         <camunda:connector>
@@ -184,12 +196,12 @@ pizzaList=object.PizzaMenu;</camunda:script>
             </camunda:inputParameter>
             <camunda:inputParameter name="payload">
               <camunda:script scriptFormat="JavaScript">out = JSON.stringify({	"InsuranceNumber": insuranceNumber,
-"FirstName":"",
-"LastName":"",
-"Gender":"",
-"DateOfBirth":"",
-"Email":"",
-"Address":""
+"FirstName":firstName,
+"LastName":lastName,
+"Gender":gender,
+"Date Of Birth":dateOfBirth,
+"E-Mail":eMail,
+"Address":address
 });</camunda:script>
             </camunda:inputParameter>
             <camunda:inputParameter name="url">https://hook.integromat.com/sl2mo6utbm2wuib4nhx88a1f2e2wakq3</camunda:inputParameter>
@@ -197,12 +209,29 @@ pizzaList=object.PizzaMenu;</camunda:script>
           <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
       </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0oz5j4k</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0mtjs1q</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0fcr7we</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0rb79f2">
         <bpmn:targetRef>DataStoreReference_1ot8fdd</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
+    <bpmn:userTask id="Task_02243hs" name="Provide additional information">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="firstName" label="First Name" type="string" />
+          <camunda:formField id="lastName" label="Last Name" type="string" />
+          <camunda:formField id="gender" label="Gender" type="enum">
+            <camunda:value id="M" name="Male" />
+            <camunda:value id="F" name="Female" />
+          </camunda:formField>
+          <camunda:formField id="dateOfBirth" label="Date of Birth" type="string" />
+          <camunda:formField id="eMail" label="E-Mail" type="string" />
+          <camunda:formField id="address" label="Address" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0oz5j4k</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0mtjs1q</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmn:message id="Message_1uejco7" name="Message_1v42lv0" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -361,9 +390,6 @@ pizzaList=object.PizzaMenu;</camunda:script>
         <di:waypoint x="370" y="545" />
         <di:waypoint x="370" y="470" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_11b6sye_di" bpmnElement="Task_0jcyjgo">
-        <dc:Bounds x="820" y="270" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="CallActivity_1kwppnx_di" bpmnElement="Collaboration_0n7y8k6">
         <dc:Bounds x="1050" y="547" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -372,9 +398,6 @@ pizzaList=object.PizzaMenu;</camunda:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BusinessRuleTask_106rgch_di" bpmnElement="Task_1ydaxbl">
         <dc:Bounds x="630" y="390" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0ca0ppz_di" bpmnElement="Task_0ca0ppz">
-        <dc:Bounds x="950" y="270" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0g8obrv_di" bpmnElement="ExclusiveGateway_0g8obrv" isMarkerVisible="true">
         <dc:Bounds x="1075" y="285" width="50" height="50" />
@@ -428,32 +451,43 @@ pizzaList=object.PizzaMenu;</camunda:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0oz5j4k_di" bpmnElement="SequenceFlow_0oz5j4k">
         <di:waypoint x="450" y="455" />
-        <di:waypoint x="450" y="520" />
-        <di:waypoint x="480" y="520" />
+        <di:waypoint x="450" y="480" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="433" y="463" width="13" height="14" />
+          <dc:Bounds x="433" y="454" width="13" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0fcr7we_di" bpmnElement="SequenceFlow_0fcr7we">
-        <di:waypoint x="580" y="520" />
-        <di:waypoint x="610" y="520" />
-        <di:waypoint x="610" y="430" />
+        <di:waypoint x="590" y="480" />
+        <di:waypoint x="590" y="430" />
         <di:waypoint x="630" y="430" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0g093er_di" bpmnElement="Task_18hmezq">
         <dc:Bounds x="310" y="390" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataOutputAssociation_0rb79f2_di" bpmnElement="DataOutputAssociation_0rb79f2">
-        <di:waypoint x="530" y="560" />
-        <di:waypoint x="530" y="575" />
+        <di:waypoint x="590" y="560" />
+        <di:waypoint x="590" y="575" />
         <di:waypoint x="385" y="575" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_0x4szn5_di" bpmnElement="MessageFlow_0x4szn5">
-        <di:waypoint x="530" y="140" />
-        <di:waypoint x="530" y="480" />
+        <di:waypoint x="500" y="140" />
+        <di:waypoint x="500" y="480" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_1tz6lea_di" bpmnElement="Task_1lzbwgh">
-        <dc:Bounds x="480" y="480" width="100" height="80" />
+        <dc:Bounds x="540" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0ca0ppz_di" bpmnElement="Task_0ca0ppz">
+        <dc:Bounds x="950" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_11b6sye_di" bpmnElement="Task_0jcyjgo">
+        <dc:Bounds x="820" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0mtjs1q_di" bpmnElement="SequenceFlow_0mtjs1q">
+        <di:waypoint x="520" y="520" />
+        <di:waypoint x="540" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0hq667r_di" bpmnElement="Task_02243hs">
+        <dc:Bounds x="420" y="480" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

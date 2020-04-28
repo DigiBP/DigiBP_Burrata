@@ -11,7 +11,7 @@
         </inputExpression>
       </input>
       <input id="InputClause_07xczkf" label="Temperature">
-        <inputExpression id="LiteralExpression_0re9i7z" typeRef="double" expressionLanguage="JavaScript">
+        <inputExpression id="LiteralExpression_0re9i7z" typeRef="long" expressionLanguage="JavaScript">
           <text>temperature</text>
         </inputExpression>
       </input>
