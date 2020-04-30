@@ -125,6 +125,16 @@
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="url">https://hook.integromat.com/hzp5x5hvi1484qyaydcfdo6sotvxm6y4?InsuranceNumber=${insuranceNumber}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">out = JSON.stringify({	"InsuranceNumber": insuranceNumber,
+"FirstName":firstName,
+"LastName":lastName,
+"Gender":gender,
+"Date Of Birth":dateOfBirth,
+"E-Mail":eMail,
+"Address":address
+});</camunda:script>
+            </camunda:inputParameter>
             <camunda:outputParameter name="patientName">
               <camunda:script scriptFormat="JavaScript">object=JSON.parse(response);
 patientName=object.PatientInformation;</camunda:script>
