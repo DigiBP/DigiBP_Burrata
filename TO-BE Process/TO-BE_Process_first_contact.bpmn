@@ -271,13 +271,25 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
     </bpmn:sequenceFlow>
     <bpmn:startEvent id="StartEvent_1buq12g" name="Need of doctors consultation">
       <bpmn:extensionElements>
-        <camunda:formData>
+        <camunda:formData businessKey="insuranceNumber">
           <camunda:formField id="insuranceNumber" label="Insurance Number" type="string" defaultValue="0" />
-          <camunda:formField id="fever" label="Fever" type="boolean" />
+          <camunda:formField id="fever" label="Fever" type="enum">
+            <camunda:value id="yes" name="yes" />
+            <camunda:value id="no" name="no" />
+          </camunda:formField>
           <camunda:formField id="temperature" label="Temperature" type="long" defaultValue="0" />
-          <camunda:formField id="fracture" label="Fracture" type="boolean" />
-          <camunda:formField id="headInjury" label="Head Injury" type="boolean" />
-          <camunda:formField id="preCondition" label="Pre-Condition" type="boolean" />
+          <camunda:formField id="fracture" label="Fracture" type="enum">
+            <camunda:value id="yes" name="yes" />
+            <camunda:value id="no" name="no" />
+          </camunda:formField>
+          <camunda:formField id="headInjury" label="Head Injury" type="enum">
+            <camunda:value id="yes" name="yes" />
+            <camunda:value id="no" name="no" />
+          </camunda:formField>
+          <camunda:formField id="preCondition" label="Pre-Condition" type="enum">
+            <camunda:value id="yes" name="yes" />
+            <camunda:value id="no" name="no" />
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_1pc3za2</bpmn:outgoing>
@@ -285,7 +297,7 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1pc3za2" sourceRef="StartEvent_1buq12g" targetRef="Task_18hmezq" />
   </bpmn:process>
-  <bpmn:message id="Message_1uejco7" name="Message_1v42lv0" />
+  <bpmn:message id="Message_1uejco7" name="firstContact" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_033fxo0">
       <bpmndi:BPMNShape id="Participant_0f5yzbv_di" bpmnElement="Participant_0f5yzbv" isHorizontal="true">

@@ -6,9 +6,12 @@
     </extensionElements>
     <decisionTable id="decisionTable_1" hitPolicy="FIRST">
       <input id="input_1" label="Fever">
-        <inputExpression id="inputExpression_1" typeRef="boolean" expressionLanguage="JavaScript">
+        <inputExpression id="inputExpression_1" typeRef="string" expressionLanguage="JavaScript">
           <text>fever</text>
         </inputExpression>
+        <inputValues id="UnaryTests_0ek0uzk">
+          <text>"yes","no"</text>
+        </inputValues>
       </input>
       <input id="InputClause_07xczkf" label="Temperature">
         <inputExpression id="LiteralExpression_0re9i7z" typeRef="long" expressionLanguage="JavaScript">
@@ -16,25 +19,34 @@
         </inputExpression>
       </input>
       <input id="InputClause_1wbngct" label="Fracture">
-        <inputExpression id="LiteralExpression_0f4bfas" typeRef="boolean" expressionLanguage="JavaScript">
+        <inputExpression id="LiteralExpression_0f4bfas" typeRef="string" expressionLanguage="JavaScript">
           <text>fracture</text>
         </inputExpression>
+        <inputValues id="UnaryTests_0re11wi">
+          <text>"yes","no"</text>
+        </inputValues>
       </input>
       <input id="InputClause_1ka755b" label="Head injury">
-        <inputExpression id="LiteralExpression_1b6hbn2" typeRef="boolean" expressionLanguage="JavaScript">
+        <inputExpression id="LiteralExpression_1b6hbn2" typeRef="string" expressionLanguage="JavaScript">
           <text>headInjury</text>
         </inputExpression>
+        <inputValues id="UnaryTests_0ze0sdl">
+          <text>"yes","no"</text>
+        </inputValues>
       </input>
       <input id="InputClause_07xhl34" label="Pre-existing condition">
-        <inputExpression id="LiteralExpression_11x9tv5" typeRef="boolean" expressionLanguage="JavaScript">
+        <inputExpression id="LiteralExpression_11x9tv5" typeRef="string" expressionLanguage="JavaScript">
           <text>preCondition</text>
         </inputExpression>
+        <inputValues id="UnaryTests_0d3rkb7">
+          <text>"yes","no"</text>
+        </inputValues>
       </input>
       <output id="output_1" label="Consultation needed" name="consultation" typeRef="boolean" />
       <rule id="DecisionRule_0pgbgmq">
         <description>High Fever</description>
         <inputEntry id="UnaryTests_15sq5ow">
-          <text>true</text>
+          <text>"yes"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_09lq9di">
           <text>&gt; 39.5</text>
@@ -61,7 +73,7 @@
           <text></text>
         </inputEntry>
         <inputEntry id="UnaryTests_1n2w4fv">
-          <text>true</text>
+          <text>"yes"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0lrwwqj">
           <text></text>
@@ -85,7 +97,7 @@
           <text></text>
         </inputEntry>
         <inputEntry id="UnaryTests_03x4edt">
-          <text>true</text>
+          <text>"yes"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_186e449">
           <text></text>
@@ -109,7 +121,7 @@
           <text></text>
         </inputEntry>
         <inputEntry id="UnaryTests_1f9gvw9">
-          <text>true</text>
+          <text>"yes"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1psj47w">
           <text>true</text>
