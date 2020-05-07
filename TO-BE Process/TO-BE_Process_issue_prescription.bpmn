@@ -45,7 +45,7 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="approval" label="I approve this prescription" type="boolean" />
-          <camunda:formField id="patientName" label="PatientName" type="string">
+          <camunda:formField id="patientName" label="PatientName" type="string" defaultValue="${patientName}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>

@@ -170,8 +170,7 @@ medicalSolution=object.MedicalSolution;</camunda:script>
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">https://hook.integromat.com/60wqftko5su6np4hwiuzsbhtjrx9xa25?MedicalSolution=${medicalSolution}&amp;InsuranceNumber=${insuranceNumber}&amp;Diagnosis=${diagnosis}
-</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/60wqftko5su6np4hwiuzsbhtjrx9xa25?MedicalSolution=${medicalSolution}&amp;InsuranceNumber=${insuranceNumber}&amp;Diagnosis=${diagnosis}</camunda:inputParameter>
             <camunda:outputParameter name="prescriptionNeeded">
               <camunda:script scriptFormat="JavaScript">object=JSON.parse(response);
 prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
