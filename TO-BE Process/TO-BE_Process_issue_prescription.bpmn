@@ -11,10 +11,10 @@
         <bpmn:flowNodeRef>ExclusiveGateway_0bfrm81</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_0ggq3vq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_0lo2gk9</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0kvyrqj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1ecwzv1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Collaboration_0n7y8k6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0bfrm81" name="Proposed prescription approved?">
@@ -30,7 +30,6 @@
     <bpmn:endEvent id="EndEvent_0lo2gk9" name="Appointment scheduled">
       <bpmn:incoming>SequenceFlow_18im1ym</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0e47u3d" sourceRef="StartEvent_1" targetRef="Task_0kvyrqj" />
     <bpmn:sequenceFlow id="SequenceFlow_1qyuh10" sourceRef="Task_1ecwzv1" targetRef="EndEvent_0ggq3vq" />
     <bpmn:sequenceFlow id="SequenceFlow_132pcww" name="yes" sourceRef="ExclusiveGateway_0bfrm81" targetRef="Task_1ecwzv1">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${NeedofPrescription=="yes"}</bpmn:conditionExpression>
@@ -42,19 +41,53 @@
     <bpmn:sequenceFlow id="SequenceFlow_18im1ym" sourceRef="Collaboration_0n7y8k6" targetRef="EndEvent_0lo2gk9" />
     <bpmn:dataObjectReference id="DataObjectReference_1g82hma" name="Doctors feedback" dataObjectRef="DataObject_0dh9ia8" />
     <bpmn:dataObject id="DataObject_0dh9ia8" />
-    <bpmn:startEvent id="StartEvent_1" name="Prescription order received">
-      <bpmn:outgoing>SequenceFlow_0e47u3d</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:userTask id="Task_0kvyrqj" name="Check collected information and prescription">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="NeedofPrescription" type="enum">
-            <camunda:value id="yes" name="yes" />
-            <camunda:value id="no" name="no" />
+          <camunda:formField id="approval" label="I approve this prescription" type="boolean" />
+          <camunda:formField id="patientName" label="PatientName" type="string" defaultValue="${patientName}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="insuranceNumber" label="Insurance Number" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="diagnosis" label="Diagnosis" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="advice" label="Advice" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="drugList" label="Drug List" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="symptom1" label="Symptoms" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="symptom2" label="Symptoms" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="symptom3" label="Symptoms" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
           </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0e47u3d</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1nq0wqn</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1r84jwf</bpmn:outgoing>
       <bpmn:property id="Property_063jkvs" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DataInputAssociation_1gp5fdx">
@@ -76,6 +109,10 @@
         <bpmn:targetRef>DataObjectReference_1g82hma</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:callActivity>
+    <bpmn:startEvent id="StartEvent_1" name="Prescription order received">
+      <bpmn:outgoing>SequenceFlow_1nq0wqn</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1nq0wqn" sourceRef="StartEvent_1" targetRef="Task_0kvyrqj" />
   </bpmn:process>
   <bpmn:message id="Message_0tunxcb" name="Message_3epjcs3" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -83,10 +120,6 @@
       <bpmndi:BPMNShape id="Participant_13ccd2t_di" bpmnElement="Participant_13ccd2t" isHorizontal="true">
         <dc:Bounds x="152" y="220" width="828" height="330" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0e47u3d_di" bpmnElement="SequenceFlow_0e47u3d">
-        <di:waypoint x="268" y="380" />
-        <di:waypoint x="330" y="380" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="DataObjectReference_0v5fg65_di" bpmnElement="DataObjectReference_0v5fg65">
         <dc:Bounds x="362" y="245" width="36" height="50" />
         <bpmndi:BPMNLabel>
@@ -172,9 +205,9 @@
         <dc:Bounds x="182" y="220" width="798" height="330" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_1w6hazs_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="232" y="362" width="36" height="36" />
+        <dc:Bounds x="202" y="362" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="205" y="405" width="89" height="27" />
+          <dc:Bounds x="176" y="405" width="88" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1dxkqof_di" bpmnElement="Task_0kvyrqj">
@@ -186,6 +219,10 @@
       <bpmndi:BPMNShape id="CallActivity_17401yv_di" bpmnElement="Collaboration_0n7y8k6">
         <dc:Bounds x="700" y="440" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nq0wqn_di" bpmnElement="SequenceFlow_1nq0wqn">
+        <di:waypoint x="238" y="380" />
+        <di:waypoint x="330" y="380" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
