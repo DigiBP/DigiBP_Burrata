@@ -144,10 +144,7 @@ patientName=object.PatientInformation;</camunda:script>
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">https://hook.integromat.com/dbwpedxd1hp2m79wafhdsals0c3x7m7k?${parameters}</camunda:inputParameter>
-            <camunda:inputParameter name="payload">
-              <camunda:script scriptFormat="JavaScript" />
-            </camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/dbwpedxd1hp2m79wafhdsals0c3x7m7k?Symptom1=${symptom1}&amp;Symptom2=${symptom2}&amp;Symptom3=${symptom3}&amp;Symptom4=${symptom4}&amp;Symptom5=${symptom5}</camunda:inputParameter>
             <camunda:outputParameter name="diagnosis">
               <camunda:script scriptFormat="JavaScript">object=JSON.parse(response);
 diagnosis=object.Diagnosis;</camunda:script>
@@ -159,12 +156,6 @@ medicalSolution=object.MedicalSolution;</camunda:script>
           </camunda:inputOutput>
           <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="parameters">
-            <camunda:script scriptFormat="JavaScript">URI = 'Symptom1=' + ${symptom1} + '&amp;Symptom2=' + ${symptom2} + '&amp;Symptom3=' + ${symptom3} + '&amp;Symptom4=' + ${symptom4} + '&amp;Symptom5=' + ${symptom5};
-encodeURI(URI);</camunda:script>
-          </camunda:inputParameter>
-        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0vvib0b</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_086mgxa</bpmn:outgoing>
@@ -176,18 +167,11 @@ encodeURI(URI);</camunda:script>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_0ca0ppz" name="Determine treatment and inform patient">
       <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:outputParameter name="treatment">something</camunda:outputParameter>
-        </camunda:inputOutput>
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">
-              <camunda:script scriptFormat="JavaScript">https://hook.integromat.com/60wqftko5su6np4hwiuzsbhtjrx9xa25?${parameters}</camunda:script>
-            </camunda:inputParameter>
-            <camunda:inputParameter name="parameters">
-              <camunda:script scriptFormat="JavaScript">encodeURI('MedicalSolution=${medicalSolution}&amp;InsuranceNumber=${insuranceNumber}&amp;Diagnosis=${diagnosis}');</camunda:script>
-            </camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/60wqftko5su6np4hwiuzsbhtjrx9xa25?MedicalSolution=${medicalSolution}&amp;InsuranceNumber=${insuranceNumber}&amp;Diagnosis=${diagnosis}
+</camunda:inputParameter>
             <camunda:outputParameter name="prescriptionNeeded">
               <camunda:script scriptFormat="JavaScript">object=JSON.parse(response);
 prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
