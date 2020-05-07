@@ -144,7 +144,21 @@ patientName=object.PatientInformation;</camunda:script>
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">https://hook.integromat.com/dbwpedxd1hp2m79wafhdsals0c3x7m7k?Symptom1=${symptom1}&amp;Symptom2=${symptom2}&amp;Symptom3=${symptom3}&amp;Symptom4=${symptom4}&amp;Symptom5=${symptom5}</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/dbwpedxd1hp2m79wafhdsals0c3x7m7k</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">out = JSON.stringify({
+"Symptom1":symptom1,
+"Symptom2":symptom2,
+"Symptom3":symptom3,
+"Symptom4":symptom4,
+"Symptom5":symptom5
+});</camunda:script>
+            </camunda:inputParameter>
             <camunda:outputParameter name="diagnosis">
               <camunda:script scriptFormat="JavaScript">object=JSON.parse(response);
 diagnosis=object.Diagnosis;</camunda:script>
