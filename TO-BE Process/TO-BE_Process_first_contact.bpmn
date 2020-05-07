@@ -31,6 +31,7 @@
         <bpmn:flowNodeRef>EndEvent_0gbcztm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_0js5ara</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1buq12g</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_077ynir</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:serviceTask id="Task_18hmezq" name="Identify patient">
@@ -202,13 +203,13 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:callActivity id="Task_02n2blh" name="Issue prescription" calledElement="Process_19p6wbr">
-      <bpmn:incoming>SequenceFlow_1xowbsn</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1v5t90i</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0vpauvl</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1679rk6" name="Prescription needed?">
       <bpmn:incoming>SequenceFlow_0an40id</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1xowbsn</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_18xc6lv</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1xowbsn</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Collaboration_0n7y8k6" name="Schedule doctors appointment" calledElement="Process_10qbc26">
       <bpmn:incoming>SequenceFlow_01qkoij</bpmn:incoming>
@@ -256,9 +257,6 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${prescriptionNeeded == null}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0an40id" sourceRef="Task_0ca0ppz" targetRef="ExclusiveGateway_1679rk6" />
-    <bpmn:sequenceFlow id="SequenceFlow_1xowbsn" name="yes" sourceRef="ExclusiveGateway_1679rk6" targetRef="Task_02n2blh">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${prescriptionNeeded != null}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:startEvent id="StartEvent_1buq12g" name="Need of doctors consultation">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -286,6 +284,28 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1bt2n6i" messageRef="Message_1uejco7" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1pc3za2" sourceRef="StartEvent_1buq12g" targetRef="Task_18hmezq" />
+    <bpmn:sequenceFlow id="SequenceFlow_1xowbsn" name="yes" sourceRef="ExclusiveGateway_1679rk6" targetRef="Task_077ynir">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${prescriptionNeeded != null}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1v5t90i" sourceRef="Task_077ynir" targetRef="Task_02n2blh" />
+    <bpmn:serviceTask id="Task_077ynir" name="Collect prescription information">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/zo6tjhp51nt7y6bhpjjzviedb952eq0e?MedicalSolution=${medicalSolution}</camunda:inputParameter>
+            <camunda:outputParameter name="prescriptionInformation">
+              <camunda:script scriptFormat="JavaScript">object=JSON.parse(response);
+drugList=object.DrugList;
+advice=object.Advice;</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1xowbsn</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1v5t90i</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_1uejco7" name="firstContact" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -346,13 +366,6 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
           <dc:Bounds x="1471" y="281" width="59" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1xowbsn_di" bpmnElement="SequenceFlow_1xowbsn">
-        <di:waypoint x="1500" y="360" />
-        <di:waypoint x="1500" y="500" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1511" y="374" width="17" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_14tef17_di" bpmnElement="EndEvent_14tef17">
         <dc:Bounds x="1612" y="317" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -539,6 +552,20 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
           <dc:Bounds x="261" y="160" width="76" height="66" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1xowbsn_di" bpmnElement="SequenceFlow_1xowbsn">
+        <di:waypoint x="1500" y="360" />
+        <di:waypoint x="1500" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1511" y="363" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1v5t90i_di" bpmnElement="SequenceFlow_1v5t90i">
+        <di:waypoint x="1500" y="470" />
+        <di:waypoint x="1500" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1v8xogy_di" bpmnElement="Task_077ynir">
+        <dc:Bounds x="1450" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
