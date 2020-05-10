@@ -16,7 +16,6 @@
       <bpmn:lane id="Lane_0wto5h8" name="MedicalChatBotService">
         <bpmn:flowNodeRef>Task_18hmezq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0wo0p2e</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_02243hs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1lzbwgh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1ydaxbl</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_10ktv7c</bpmn:flowNodeRef>
@@ -31,6 +30,7 @@
         <bpmn:flowNodeRef>EndEvent_0gbcztm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_0js5ara</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1buq12g</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_02243hs</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:serviceTask id="Task_18hmezq" name="Identify patient">
@@ -66,23 +66,6 @@ patientName=object.PatientInformation;</camunda:script>
       <bpmn:outgoing>SequenceFlow_0l1ob3h</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0oz5j4k</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_02243hs" name="Provide additional information">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="firstName" label="First Name" type="string" />
-          <camunda:formField id="lastName" label="Last Name" type="string" />
-          <camunda:formField id="gender" label="Gender" type="enum">
-            <camunda:value id="M" name="Male" />
-            <camunda:value id="F" name="Female" />
-          </camunda:formField>
-          <camunda:formField id="dateOfBirth" label="Date of Birth" type="string" />
-          <camunda:formField id="eMail" label="E-Mail" type="string" />
-          <camunda:formField id="address" label="Address" type="string" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0oz5j4k</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0mtjs1q</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:serviceTask id="Task_1lzbwgh" name="Create new account">
       <bpmn:extensionElements>
         <camunda:connector>
@@ -211,6 +194,9 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       <bpmn:outgoing>SequenceFlow_18xc6lv</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Collaboration_0n7y8k6" name="Schedule doctors appointment" calledElement="Process_10qbc26">
+      <bpmn:extensionElements>
+        <camunda:in source="insuranceNumber" target="insuranceNumber" local="true" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_01qkoij</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0dn5e87</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_09akxij</bpmn:outgoing>
@@ -286,6 +272,10 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1bt2n6i" messageRef="Message_1uejco7" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1pc3za2" sourceRef="StartEvent_1buq12g" targetRef="Task_18hmezq" />
+    <bpmn:serviceTask id="Task_02243hs" name="Provide additional information">
+      <bpmn:incoming>SequenceFlow_0oz5j4k</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0mtjs1q</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_1uejco7" name="firstContact" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -494,9 +484,6 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
         <di:waypoint x="540" y="335" />
         <di:waypoint x="590" y="335" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_0hq667r_di" bpmnElement="Task_02243hs">
-        <dc:Bounds x="440" y="295" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0vvib0b_di" bpmnElement="SequenceFlow_0vvib0b">
         <di:waypoint x="1040" y="485" />
         <di:waypoint x="1090" y="485" />
@@ -539,6 +526,9 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
           <dc:Bounds x="261" y="160" width="76" height="66" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_19sebqk_di" bpmnElement="Task_02243hs">
+        <dc:Bounds x="440" y="295" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

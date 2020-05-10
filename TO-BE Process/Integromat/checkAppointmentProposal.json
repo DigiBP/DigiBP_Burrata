@@ -1,5 +1,5 @@
 {
-    "name": "Integration Webhooks, Tools, Google Calendar",
+    "name": "Check Appointment Availability",
     "flow": [
         {
             "id": 1,
@@ -23,14 +23,14 @@
                 "parameters": [
                     {
                         "name": "hook",
-                        "label": "Webhook",
                         "type": "hook",
+                        "label": "Webhook",
                         "required": true
                     },
                     {
                         "name": "maxResults",
-                        "label": "Maximum number of results",
-                        "type": "number"
+                        "type": "number",
+                        "label": "Maximum number of results"
                     }
                 ],
                 "interface": [
@@ -50,7 +50,7 @@
             "mapper": {
                 "name": "appointmentTimestamp",
                 "scope": "roundtrip",
-                "value": "{{parseDate(1.value; \"\"\"DD.MM.YYYY HH:mm\"\"\")}}"
+                "value": "{{parseDate(1.value; \"\"\"DD/MM/YYYY HH:mm\"\"\")}}"
             },
             "metadata": {
                 "designer": {
@@ -65,14 +65,14 @@
                 "expect": [
                     {
                         "name": "name",
-                        "label": "Variable name",
                         "type": "text",
+                        "label": "Variable name",
                         "required": true
                     },
                     {
                         "name": "scope",
-                        "label": "Variable lifetime",
                         "type": "select",
+                        "label": "Variable lifetime",
                         "required": true,
                         "validate": {
                             "enum": [
@@ -83,15 +83,15 @@
                     },
                     {
                         "name": "value",
-                        "label": "Variable value",
-                        "type": "any"
+                        "type": "any",
+                        "label": "Variable value"
                     }
                 ],
                 "interface": [
                     {
                         "name": "value",
-                        "label": "appointmentTimestamp",
-                        "type": "any"
+                        "type": "any",
+                        "label": "appointmentTimestamp"
                     }
                 ]
             }
@@ -119,13 +119,13 @@
                                 "continueWhenNoRes": false
                             },
                             "mapper": {
-                                "timeMin": "{{formatDate(3.value; \"DD.MM.YYYY\")}}",
-                                "timeMax": "{{addDays(formatDate(3.value; \"DD.MM.YYYY\"); 1)}}",
-                                "singleEvents": false,
                                 "query": "",
                                 "orderBy": "",
+                                "timeMax": "{{addHours(formatDate(3.value; \"DD.MM.YYYY HH:mm\"); 1)}}",
+                                "timeMin": "{{addHours(formatDate(3.value; \"DD.MM.YYYY HH:mm\"); -1)}}",
+                                "calendarId": "caepb2b68n6fki1q6uqh6l2ht4@group.calendar.google.com",
                                 "maxResults": "50",
-                                "calendarId": "caepb2b68n6fki1q6uqh6l2ht4@group.calendar.google.com"
+                                "singleEvents": false
                             },
                             "metadata": {
                                 "designer": {
@@ -136,57 +136,57 @@
                                     "account": {
                                         "label": "BurrataSpreadsheet (martinpeschmitz@gmail.com)"
                                     },
+                                    "orderBy": {
+                                        "label": ""
+                                    },
                                     "calendarId": {
                                         "mode": "chose",
                                         "label": "Burrata_Doc"
                                     },
                                     "singleEvents": {
                                         "mode": "chose"
-                                    },
-                                    "orderBy": {
-                                        "label": ""
                                     }
                                 },
                                 "parameters": [
                                     {
                                         "name": "account",
-                                        "label": "Connection",
                                         "type": "account",
+                                        "label": "Connection",
                                         "required": true
                                     },
                                     {
                                         "name": "continueWhenNoRes",
-                                        "label": "Continue the execution of the route even if the module returns no results",
                                         "type": "boolean",
+                                        "label": "Continue the execution of the route even if the module returns no results",
                                         "required": true
                                     }
                                 ],
                                 "expect": [
                                     {
                                         "name": "timeMin",
-                                        "label": "Start date",
-                                        "type": "date"
+                                        "type": "date",
+                                        "label": "Start date"
                                     },
                                     {
                                         "name": "timeMax",
-                                        "label": "End date",
-                                        "type": "date"
+                                        "type": "date",
+                                        "label": "End date"
                                     },
                                     {
                                         "name": "singleEvents",
-                                        "label": "Single events",
                                         "type": "boolean",
+                                        "label": "Single events",
                                         "required": true
                                     },
                                     {
                                         "name": "query",
-                                        "label": "Query",
-                                        "type": "text"
+                                        "type": "text",
+                                        "label": "Query"
                                     },
                                     {
                                         "name": "orderBy",
-                                        "label": "Order by",
                                         "type": "select",
+                                        "label": "Order by",
                                         "validate": {
                                             "enum": [
                                                 "startTime",
@@ -196,13 +196,13 @@
                                     },
                                     {
                                         "name": "maxResults",
-                                        "label": "Maximum number of returned events",
-                                        "type": "uinteger"
+                                        "type": "uinteger",
+                                        "label": "Maximum number of returned events"
                                     },
                                     {
                                         "name": "calendarId",
-                                        "label": "Calendar",
                                         "type": "select",
+                                        "label": "Calendar",
                                         "required": true
                                     }
                                 ]
@@ -236,32 +236,39 @@
                                                     [
                                                         {
                                                             "a": "{{2.start}}",
-                                                            "o": "date:notequal",
-                                                            "b": "{{3.value}}"
+                                                            "b": "{{3.value}}",
+                                                            "o": "date:notequal"
                                                         },
                                                         {
                                                             "a": "{{2.start}}",
-                                                            "o": "date:greaterorequal",
-                                                            "b": "{{addHours(3.value; 1)}}"
+                                                            "b": "{{addHours(3.value; 1)}}",
+                                                            "o": "date:greaterorequal"
                                                         }
                                                     ],
                                                     [
                                                         {
                                                             "a": "{{2.start}}",
-                                                            "o": "date:notequal",
-                                                            "b": "{{3.value}}"
+                                                            "b": "{{3.value}}",
+                                                            "o": "date:notequal"
                                                         },
                                                         {
                                                             "a": "{{2.start}}",
-                                                            "o": "date:lessorequal",
-                                                            "b": "{{addHours(3.value; -1)}}"
+                                                            "b": "{{addHours(3.value; -1)}}",
+                                                            "o": "date:lessorequal"
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            "a": "{{2.id}}",
+                                                            "b": "",
+                                                            "o": "notexist"
                                                         }
                                                     ]
                                                 ]
                                             },
                                             "mapper": {
-                                                "status": "200",
                                                 "body": "{\n\"appointmentPossible\":true\n\"reason\": \"free\"\n}",
+                                                "status": "200",
                                                 "headers": [
                                                     {
                                                         "key": "Content-Type",
@@ -284,8 +291,8 @@
                                                 "expect": [
                                                     {
                                                         "name": "status",
-                                                        "label": "Status",
                                                         "type": "uinteger",
+                                                        "label": "Status",
                                                         "required": true,
                                                         "validate": {
                                                             "min": 100
@@ -293,18 +300,16 @@
                                                     },
                                                     {
                                                         "name": "body",
-                                                        "label": "Body",
-                                                        "type": "any"
+                                                        "type": "any",
+                                                        "label": "Body"
                                                     },
                                                     {
                                                         "name": "headers",
-                                                        "label": "Custom headers",
-                                                        "type": "array",
                                                         "spec": [
                                                             {
                                                                 "name": "key",
-                                                                "label": "Key",
                                                                 "type": "text",
+                                                                "label": "Key",
                                                                 "required": true,
                                                                 "validate": {
                                                                     "max": 256
@@ -312,14 +317,16 @@
                                                             },
                                                             {
                                                                 "name": "value",
-                                                                "label": "Value",
                                                                 "type": "text",
+                                                                "label": "Value",
                                                                 "required": true,
                                                                 "validate": {
                                                                     "max": 4096
                                                                 }
                                                             }
                                                         ],
+                                                        "type": "array",
+                                                        "label": "Custom headers",
                                                         "validate": {
                                                             "maxItems": 16
                                                         }
@@ -343,27 +350,27 @@
                                                     [
                                                         {
                                                             "a": "{{2.end}}",
-                                                            "o": "date:less",
-                                                            "b": "{{addHours(3.value; 1)}}"
+                                                            "b": "{{addHours(3.value; 1)}}",
+                                                            "o": "date:less"
                                                         },
                                                         {
                                                             "a": "{{2.start}}",
-                                                            "o": "date:greater",
-                                                            "b": "{{addHours(3.value; -1)}}"
+                                                            "b": "{{addHours(3.value; -1)}}",
+                                                            "o": "date:greater"
                                                         }
                                                     ],
                                                     [
                                                         {
                                                             "a": "{{2.start}}",
-                                                            "o": "date:equal",
-                                                            "b": "{{3.value}}"
+                                                            "b": "{{3.value}}",
+                                                            "o": "date:equal"
                                                         }
                                                     ]
                                                 ]
                                             },
                                             "mapper": {
-                                                "status": "200",
                                                 "body": "{\n\"appointmentPossible\":false\n\"reason\": \"blocked\"\n}",
+                                                "status": "200",
                                                 "headers": [
                                                     {
                                                         "key": "Content-Type",
@@ -386,8 +393,8 @@
                                                 "expect": [
                                                     {
                                                         "name": "status",
-                                                        "label": "Status",
                                                         "type": "uinteger",
+                                                        "label": "Status",
                                                         "required": true,
                                                         "validate": {
                                                             "min": 100
@@ -395,18 +402,16 @@
                                                     },
                                                     {
                                                         "name": "body",
-                                                        "label": "Body",
-                                                        "type": "any"
+                                                        "type": "any",
+                                                        "label": "Body"
                                                     },
                                                     {
                                                         "name": "headers",
-                                                        "label": "Custom headers",
-                                                        "type": "array",
                                                         "spec": [
                                                             {
                                                                 "name": "key",
-                                                                "label": "Key",
                                                                 "type": "text",
+                                                                "label": "Key",
                                                                 "required": true,
                                                                 "validate": {
                                                                     "max": 256
@@ -414,14 +419,16 @@
                                                             },
                                                             {
                                                                 "name": "value",
-                                                                "label": "Value",
                                                                 "type": "text",
+                                                                "label": "Value",
                                                                 "required": true,
                                                                 "validate": {
                                                                     "max": 4096
                                                                 }
                                                             }
                                                         ],
+                                                        "type": "array",
+                                                        "label": "Custom headers",
                                                         "validate": {
                                                             "maxItems": 16
                                                         }
@@ -449,22 +456,22 @@
                                     [
                                         {
                                             "a": "{{formatDate(3.value; \"HH:mm\")}}",
-                                            "o": "time:less",
-                                            "b": "{{formatDate(parseDate(\"\"\"08:00\"\"\"; \"HH:mm\"); \"HH:mm\")}}"
+                                            "b": "{{formatDate(parseDate(\"\"\"08:00\"\"\"; \"HH:mm\"); \"HH:mm\")}}",
+                                            "o": "time:less"
                                         }
                                     ],
                                     [
                                         {
                                             "a": "{{formatDate(3.value; \"HH:mm\")}}",
-                                            "o": "time:greater",
-                                            "b": "{{formatDate(parseDate(\"\"\"17:00\"\"\"; \"HH:mm\"); \"HH:mm\")}}"
+                                            "b": "{{formatDate(parseDate(\"\"\"17:00\"\"\"; \"HH:mm\"); \"HH:mm\")}}",
+                                            "o": "time:greater"
                                         }
                                     ]
                                 ]
                             },
                             "mapper": {
-                                "status": "200",
                                 "body": "{\n\"appointmentPossible\":false\n\"reason\": \"outsideBusinessHours\"\n}",
+                                "status": "200",
                                 "headers": [
                                     {
                                         "key": "Content-Type",
@@ -487,8 +494,8 @@
                                 "expect": [
                                     {
                                         "name": "status",
-                                        "label": "Status",
                                         "type": "uinteger",
+                                        "label": "Status",
                                         "required": true,
                                         "validate": {
                                             "min": 100
@@ -496,18 +503,16 @@
                                     },
                                     {
                                         "name": "body",
-                                        "label": "Body",
-                                        "type": "any"
+                                        "type": "any",
+                                        "label": "Body"
                                     },
                                     {
                                         "name": "headers",
-                                        "label": "Custom headers",
-                                        "type": "array",
                                         "spec": [
                                             {
                                                 "name": "key",
-                                                "label": "Key",
                                                 "type": "text",
+                                                "label": "Key",
                                                 "required": true,
                                                 "validate": {
                                                     "max": 256
@@ -515,14 +520,16 @@
                                             },
                                             {
                                                 "name": "value",
-                                                "label": "Value",
                                                 "type": "text",
+                                                "label": "Value",
                                                 "required": true,
                                                 "validate": {
                                                     "max": 4096
                                                 }
                                             }
                                         ],
+                                        "type": "array",
+                                        "label": "Custom headers",
                                         "validate": {
                                             "maxItems": 16
                                         }
