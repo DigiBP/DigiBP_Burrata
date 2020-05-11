@@ -187,6 +187,9 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:callActivity id="Task_02n2blh" name="Issue prescription" calledElement="Process_19p6wbr">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1v5t90i</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0vpauvl</bpmn:outgoing>
     </bpmn:callActivity>
@@ -196,6 +199,12 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       <bpmn:outgoing>SequenceFlow_1xowbsn</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Collaboration_0n7y8k6" name="Schedule doctors appointment" calledElement="Process_10qbc26">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Input_1drgehj" />
+        </camunda:inputOutput>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_01qkoij</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0dn5e87</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_09akxij</bpmn:outgoing>
