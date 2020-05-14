@@ -42,7 +42,7 @@
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">https://hook.integromat.com/hzp5x5hvi1484qyaydcfdo6sotvxm6y4?InsuranceNumber=${insuranceNumber}</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/bamzx72ulf8kg8hw2ey1bw6duebswav9?InsuranceNumber=${insuranceNumber}</camunda:inputParameter>
             <camunda:outputParameter name="patientName">
               <camunda:script scriptFormat="JavaScript">object=JSON.parse(response);
 patientName=object.PatientInformation;</camunda:script>
@@ -104,7 +104,7 @@ patientName=object.PatientInformation;</camunda:script>
 "Address":address
 });</camunda:script>
             </camunda:inputParameter>
-            <camunda:inputParameter name="url">https://hook.integromat.com/sl2mo6utbm2wuib4nhx88a1f2e2wakq3</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/zbeedk5u73hmh2jpay5w835anxq4x4kx</camunda:inputParameter>
           </camunda:inputOutput>
           <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
@@ -144,7 +144,7 @@ patientName=object.PatientInformation;</camunda:script>
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">https://hook.integromat.com/dbwpedxd1hp2m79wafhdsals0c3x7m7k</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/1mwa2izmx2y39jwzc9y947tomg6aostp</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
@@ -184,7 +184,7 @@ medicalSolution=object.MedicalSolution;</camunda:script>
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">https://hook.integromat.com/60wqftko5su6np4hwiuzsbhtjrx9xa25?MedicalSolution=${medicalSolution}&amp;InsuranceNumber=${insuranceNumber}&amp;Diagnosis=${diagnosis}</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/aea6sm37i5kk43qbxl2xlwamfvydwcj8?MedicalSolution=${medicalSolution}&amp;InsuranceNumber=${insuranceNumber}&amp;Diagnosis=${diagnosis}</camunda:inputParameter>
             <camunda:outputParameter name="prescriptionNeeded">
               <camunda:script scriptFormat="JavaScript">object=JSON.parse(response);
 prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
