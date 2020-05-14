@@ -78,7 +78,7 @@
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">https://hook.integromat.com/pl3av7tv1o79gmvb1qeuptmwrxalgdg6</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/vqxboiqh8flb8mv1c5ityfg7f8i8pg4l</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>

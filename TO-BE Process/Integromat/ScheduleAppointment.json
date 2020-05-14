@@ -1,19 +1,19 @@
 {
-    "name": "Schedule Appointment",
+    "name": "Set appointment and inform patient",
     "flow": [
         {
             "id": 1,
             "module": "gateway:CustomWebHook",
             "version": 1,
             "parameters": {
-                "hook": 368894,
+                "hook": 368968,
                 "maxResults": 2
             },
             "mapper": {},
             "metadata": {
                 "designer": {
-                    "x": -871,
-                    "y": -21
+                    "x": -695,
+                    "y": -36
                 },
                 "restore": {
                     "hook": {
@@ -35,15 +35,23 @@
                 ],
                 "interface": [
                     {
-                        "name": "insuranceNumber",
+                        "name": "patient",
                         "type": "text"
                     },
                     {
-                        "name": "appointmentDate",
+                        "name": "date",
                         "type": "text"
                     },
                     {
-                        "name": "appointmentTime",
+                        "name": "start",
+                        "type": "text"
+                    },
+                    {
+                        "name": "end",
+                        "type": "text"
+                    },
+                    {
+                        "name": "email",
                         "type": "text"
                     }
                 ],
@@ -51,353 +59,25 @@
             }
         },
         {
-            "id": 4,
-            "module": "google-sheets:filterRows",
-            "version": 2,
-            "parameters": {
-                "__IMTCONN__": 1135164
-            },
-            "mapper": {
-                "limit": "1",
-                "filter": [
-                    [
-                        {
-                            "a": "A",
-                            "b": "{{1.insuranceNumber}}",
-                            "o": "text:equal"
-                        }
-                    ]
-                ],
-                "sheetId": "Patients - Martin",
-                "sortOrder": "asc",
-                "spreadsheetId": "1uSmTeJnqbJVXbpa7dm8LQsH-BlIwQ-0_-VpWshq6m6Q",
-                "tableFirstRow": "A1:Z1",
-                "includesHeaders": true,
-                "valueRenderOption": "FORMATTED_VALUE",
-                "dateTimeRenderOption": "FORMATTED_STRING"
-            },
-            "metadata": {
-                "designer": {
-                    "x": -564,
-                    "y": -24
-                },
-                "restore": {
-                    "orderBy": {
-                        "mode": "chose",
-                        "label": ""
-                    },
-                    "sheetId": {
-                        "mode": "chose",
-                        "label": "Patients - Martin"
-                    },
-                    "sortOrder": {
-                        "mode": "chose",
-                        "label": "Ascending"
-                    },
-                    "__IMTCONN__": {
-                        "label": "BurrataSpreadsheet (martinpeschmitz@gmail.com)"
-                    },
-                    "spreadsheetId": {
-                        "mode": "chose",
-                        "label": "BurrataTest"
-                    },
-                    "tableFirstRow": {
-                        "label": "A-Z"
-                    },
-                    "includesHeaders": {
-                        "mode": "chose",
-                        "label": "Yes"
-                    },
-                    "valueRenderOption": {
-                        "mode": "chose",
-                        "label": "Formatted value"
-                    },
-                    "dateTimeRenderOption": {
-                        "mode": "chose",
-                        "label": "Formatted string"
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "__IMTCONN__",
-                        "type": "account",
-                        "label": "Connection",
-                        "required": true
-                    }
-                ],
-                "expect": [
-                    {
-                        "name": "spreadsheetId",
-                        "type": "select",
-                        "label": "Spreadsheet",
-                        "required": true
-                    },
-                    {
-                        "name": "valueRenderOption",
-                        "type": "select",
-                        "label": "Value render option",
-                        "validate": {
-                            "enum": [
-                                "FORMATTED_VALUE",
-                                "UNFORMATTED_VALUE",
-                                "FORMULA"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "dateTimeRenderOption",
-                        "type": "select",
-                        "label": "Date and time render option",
-                        "validate": {
-                            "enum": [
-                                "SERIAL_NUMBER",
-                                "FORMATTED_STRING"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "type": "number",
-                        "label": "Maximum number of returned rows"
-                    },
-                    {
-                        "name": "sheetId",
-                        "type": "select",
-                        "label": "Sheet",
-                        "required": true
-                    },
-                    {
-                        "name": "includesHeaders",
-                        "type": "select",
-                        "label": "Table contains headers",
-                        "required": true,
-                        "validate": {
-                            "enum": [
-                                true,
-                                false
-                            ]
-                        }
-                    },
-                    {
-                        "name": "tableFirstRow",
-                        "type": "select",
-                        "label": "Column range",
-                        "required": true,
-                        "validate": {
-                            "enum": [
-                                "A1:Z1",
-                                "A1:BZ1",
-                                "A1:CZ1",
-                                "A1:DZ1",
-                                "A1:MZ1",
-                                "A1:ZZ1"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "filter",
-                        "type": "filter",
-                        "label": "Filter",
-                        "options": {
-                            "store": "rpc://google-sheets@2/rpcGetFilterKeys?includesHeaders=true"
-                        }
-                    },
-                    {
-                        "name": "sortOrder",
-                        "type": "select",
-                        "label": "Sort order",
-                        "validate": {
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "orderBy",
-                        "type": "select",
-                        "label": "Order by"
-                    }
-                ],
-                "interface": [
-                    {
-                        "name": "__IMTLENGTH__",
-                        "type": "uinteger",
-                        "label": "Total number of bundles"
-                    },
-                    {
-                        "name": "__IMTINDEX__",
-                        "type": "uinteger",
-                        "label": "Bundle order position"
-                    },
-                    {
-                        "name": "__ROW_NUMBER__",
-                        "type": "number",
-                        "label": "Row number"
-                    },
-                    {
-                        "name": "__SPREADSHEET_ID__",
-                        "type": "text",
-                        "label": "Spreadsheet ID"
-                    },
-                    {
-                        "name": "__SHEET__",
-                        "type": "text",
-                        "label": "Sheet"
-                    },
-                    {
-                        "name": "0",
-                        "type": "text",
-                        "label": "InsuranceNumber (A)"
-                    },
-                    {
-                        "name": "1",
-                        "type": "text",
-                        "label": "FirstName (B)"
-                    },
-                    {
-                        "name": "2",
-                        "type": "text",
-                        "label": "LastName (C)"
-                    },
-                    {
-                        "name": "3",
-                        "type": "text",
-                        "label": "FullName (D)"
-                    },
-                    {
-                        "name": "4",
-                        "type": "text",
-                        "label": "Gender (E)"
-                    },
-                    {
-                        "name": "5",
-                        "type": "text",
-                        "label": "Date of Birth (F)"
-                    },
-                    {
-                        "name": "6",
-                        "type": "text",
-                        "label": "Age (G)"
-                    },
-                    {
-                        "name": "7",
-                        "type": "text",
-                        "label": "E-Mail (H)"
-                    },
-                    {
-                        "name": "8",
-                        "type": "text",
-                        "label": "Address (I)"
-                    },
-                    {
-                        "name": "9",
-                        "type": "text",
-                        "label": "(J)"
-                    },
-                    {
-                        "name": "10",
-                        "type": "text",
-                        "label": "(K)"
-                    },
-                    {
-                        "name": "11",
-                        "type": "text",
-                        "label": "(L)"
-                    },
-                    {
-                        "name": "12",
-                        "type": "text",
-                        "label": "(M)"
-                    },
-                    {
-                        "name": "13",
-                        "type": "text",
-                        "label": "(N)"
-                    },
-                    {
-                        "name": "14",
-                        "type": "text",
-                        "label": "(O)"
-                    },
-                    {
-                        "name": "15",
-                        "type": "text",
-                        "label": "(P)"
-                    },
-                    {
-                        "name": "16",
-                        "type": "text",
-                        "label": "(Q)"
-                    },
-                    {
-                        "name": "17",
-                        "type": "text",
-                        "label": "(R)"
-                    },
-                    {
-                        "name": "18",
-                        "type": "text",
-                        "label": "(S)"
-                    },
-                    {
-                        "name": "19",
-                        "type": "text",
-                        "label": "(T)"
-                    },
-                    {
-                        "name": "20",
-                        "type": "text",
-                        "label": "(U)"
-                    },
-                    {
-                        "name": "21",
-                        "type": "text",
-                        "label": "(V)"
-                    },
-                    {
-                        "name": "22",
-                        "type": "text",
-                        "label": "(W)"
-                    },
-                    {
-                        "name": "23",
-                        "type": "text",
-                        "label": "(X)"
-                    },
-                    {
-                        "name": "24",
-                        "type": "text",
-                        "label": "(Y)"
-                    },
-                    {
-                        "name": "25",
-                        "type": "text",
-                        "label": "(Z)"
-                    }
-                ]
-            }
-        },
-        {
             "id": 2,
             "module": "google-calendar:ActionCreateEvent",
             "version": 4,
             "parameters": {
-                "account": 1135164
+                "account": 1152718
             },
             "mapper": {
-                "end": "{{addHours(parseDate(1.appointmentDate + \"-\" + 1.appointmentTime; \"DD/MM/YYYY-HH:mm\"); 1)}}",
-                "start": "{{parseDate(1.appointmentDate + \"-\" + 1.appointmentTime; \"DD/MM/YYYY-HH:mm\")}}",
+                "end": "{{parseDate(1.date + \"-\" + 1.end; \"DD.MM.YYYY-HH:mm\")}}",
+                "start": "{{parseDate(1.date + \"-\" + 1.start; \"DD.MM.YYYY-HH:mm\")}}",
                 "colorId": 3,
-                "summary": "{{4.`3`}}",
+                "summary": "{{1.patient}}",
                 "location": "@DoctorsOffice",
                 "attendees": [],
                 "reminders": false,
-                "calendarId": "caepb2b68n6fki1q6uqh6l2ht4@group.calendar.google.com",
+                "calendarId": "burrata.digibp.bot@gmail.com",
                 "recurrence": [],
                 "visibility": "default",
                 "allDayEvent": false,
-                "description": "Appointment for {{4.`3`}} for diagnose or treatment ",
+                "description": "Appointment for {{1.patient}} for diagnose or treatment ",
                 "transparency": "opaque",
                 "guestsCanModify": false,
                 "sendNotifications": false,
@@ -405,12 +85,12 @@
             },
             "metadata": {
                 "designer": {
-                    "x": -262,
-                    "y": -23
+                    "x": -404,
+                    "y": -40
                 },
                 "restore": {
                     "account": {
-                        "label": "BurrataSpreadsheet (martinpeschmitz@gmail.com)"
+                        "label": "Burrata"
                     },
                     "colorId": {
                         "mode": "chose",
@@ -425,7 +105,7 @@
                     },
                     "calendarId": {
                         "mode": "chose",
-                        "label": "Burrata_Doc"
+                        "label": "burrata.digibp.bot@gmail.com"
                     },
                     "recurrence": {
                         "items": []
@@ -613,22 +293,22 @@
             "module": "google-email:ActionSendEmail",
             "version": 1,
             "parameters": {
-                "account": 1135164
+                "account": 1152718
             },
             "mapper": {
                 "cc": [],
                 "to": [
-                    "{{4.`7`}}"
+                    "{{1.email}}"
                 ],
                 "bcc": [],
-                "html": "Dear {{4.`3`}}\n<p>\nyour doctors appointment has been scheduled for {{formatDate(parseDate(1.appointmentDate; \"DD/MM/YYYY\"); \"MMM DD YYYY\")}} at{{1.appointmentTime}}.\n<p>\nPlease make sure to be there in time.\n<p>\nYours sincerely\n<p>\nMedical chat bot service",
+                "html": "Dear {{1.patient}}\n<p>\nyour doctors appointment has been scheduled for {{formatDate(parseDate(1.date; \"DD.MM.YYYY\"); \"MMM DD YYYY\")}} from {{1.start}} to {{1.end}}.\n<p>\nPlease make sure to be there in time.\n<p>\nYours sincerely\n<p>\nMedical chat bot service",
                 "subject": "Your appointment has been scheduled",
                 "attachments": []
             },
             "metadata": {
                 "designer": {
-                    "x": 49,
-                    "y": -26
+                    "x": -116,
+                    "y": -40
                 },
                 "restore": {
                     "cc": {
@@ -646,7 +326,7 @@
                         "items": []
                     },
                     "account": {
-                        "label": "BurrataSpreadsheet (martinpeschmitz@gmail.com)"
+                        "label": "Burrata (burrata.digibp.bot@gmail.com)"
                     },
                     "attachments": {
                         "mode": "chose",

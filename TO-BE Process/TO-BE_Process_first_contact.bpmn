@@ -20,7 +20,6 @@
         <bpmn:flowNodeRef>Task_1lzbwgh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1ydaxbl</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_10ktv7c</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0ixdb6g</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0jcyjgo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0g8obrv</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0ca0ppz</bpmn:flowNodeRef>
@@ -32,6 +31,7 @@
         <bpmn:flowNodeRef>EndEvent_0js5ara</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1buq12g</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_077ynir</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0ixdb6g</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:serviceTask id="Task_18hmezq" name="Identify patient">
@@ -84,7 +84,7 @@ patientName=object.PatientInformation;</camunda:script>
       <bpmn:incoming>SequenceFlow_0oz5j4k</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0mtjs1q</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Task_1lzbwgh" name="Create new account">
+    <bpmn:serviceTask id="Task_1lzbwgh" name="Add Patient information to database">
       <bpmn:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
@@ -115,7 +115,7 @@ patientName=object.PatientInformation;</camunda:script>
         <bpmn:targetRef>DataStoreReference_1ot8fdd</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:dataStoreReference id="DataStoreReference_1ot8fdd" name="Patient database of the medical service provider" />
+    <bpmn:dataStoreReference id="DataStoreReference_1ot8fdd" name="Patient database of the medical service provider&#10;(Google Sheet)" />
     <bpmn:businessRuleTask id="Task_1ydaxbl" name="Diagnose basic condition" camunda:resultVariable="consultation" camunda:decisionRef="Decision_0v2zxuz" camunda:mapDecisionResult="singleEntry">
       <bpmn:incoming>SequenceFlow_0l1ob3h</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0fcr7we</bpmn:incoming>
@@ -126,19 +126,6 @@ patientName=object.PatientInformation;</camunda:script>
       <bpmn:outgoing>SequenceFlow_18ehj8f</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_01qkoij</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_0ixdb6g" name="Provide more detail">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="symptom1" label="Symptom 1" type="string" />
-          <camunda:formField id="symptom2" label="Symptom 2" type="string" />
-          <camunda:formField id="symptom3" label="Symptom 3" type="string" />
-          <camunda:formField id="symptom4" label="Symptom 4" type="string" />
-          <camunda:formField id="symptom5" label="Symptom 5" type="string" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_18ehj8f</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0vvib0b</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:serviceTask id="Task_0jcyjgo" name="Diagnose condition in detail">
       <bpmn:extensionElements>
         <camunda:connector>
@@ -200,6 +187,9 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:callActivity id="Task_02n2blh" name="Issue prescription" calledElement="Process_19p6wbr">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1v5t90i</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0vpauvl</bpmn:outgoing>
     </bpmn:callActivity>
@@ -209,6 +199,12 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
       <bpmn:outgoing>SequenceFlow_1xowbsn</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Collaboration_0n7y8k6" name="Schedule doctors appointment" calledElement="Process_10qbc26">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Input_1drgehj" />
+        </camunda:inputOutput>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_01qkoij</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0dn5e87</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_09akxij</bpmn:outgoing>
@@ -303,6 +299,19 @@ advice=object.Advice;</camunda:script>
       <bpmn:incoming>SequenceFlow_1xowbsn</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1v5t90i</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:userTask id="Task_0ixdb6g" name="Provide more detail">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="symptom1" label="Symptom 1" type="string" />
+          <camunda:formField id="symptom2" label="Symptom 2" type="string" />
+          <camunda:formField id="symptom3" label="Symptom 3" type="string" />
+          <camunda:formField id="symptom4" label="Symptom 4" type="string" />
+          <camunda:formField id="symptom5" label="Symptom 5" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_18ehj8f</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0vvib0b</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmn:message id="Message_1uejco7" name="firstContact" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -330,7 +339,7 @@ advice=object.Advice;</camunda:script>
       <bpmndi:BPMNShape id="DataStoreReference_1ot8fdd_di" bpmnElement="DataStoreReference_1ot8fdd">
         <dc:Bounds x="545" y="620" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="518" y="572" width="83" height="40" />
+          <dc:Bounds x="528" y="680" width="83" height="53" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_10ktv7c_di" bpmnElement="ExclusiveGateway_10ktv7c" isMarkerVisible="true">
@@ -347,7 +356,7 @@ advice=object.Advice;</camunda:script>
         <di:waypoint x="895" y="485" />
         <di:waypoint x="940" y="485" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="915" y="468" width="13" height="14" />
+          <dc:Bounds x="914" y="468" width="13" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_0o8gttv_di" bpmnElement="MessageFlow_0o8gttv">

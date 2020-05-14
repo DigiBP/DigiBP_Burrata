@@ -1,0 +1,498 @@
+{
+    "name": "Start Process from Dialogflow",
+    "flow": [
+        {
+            "id": 1,
+            "module": "gateway:CustomWebHook",
+            "version": 1,
+            "parameters": {
+                "hook": 378624,
+                "maxResults": 2
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -665,
+                    "y": -241
+                },
+                "restore": {
+                    "hook": {
+                        "label": "startProcess"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "hook",
+                        "type": "hook",
+                        "label": "Webhook",
+                        "required": true
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of results"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "responseId",
+                        "type": "text"
+                    },
+                    {
+                        "name": "queryResult",
+                        "spec": [
+                            {
+                                "name": "queryText",
+                                "type": "text"
+                            },
+                            {
+                                "name": "parameters",
+                                "spec": [
+                                    {
+                                        "name": "insurance-number",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "fever",
+                                        "spec": {
+                                            "type": "text"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "name": "temperature",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "fracture",
+                                        "spec": {
+                                            "type": "text"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "name": "headInjury",
+                                        "spec": {
+                                            "type": "text"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "name": "preCondition",
+                                        "spec": {
+                                            "type": "text"
+                                        },
+                                        "type": "array"
+                                    }
+                                ],
+                                "type": "collection"
+                            },
+                            {
+                                "name": "allRequiredParamsPresent",
+                                "type": "boolean"
+                            },
+                            {
+                                "name": "fulfillmentMessages",
+                                "spec": {
+                                    "spec": [
+                                        {
+                                            "name": "text",
+                                            "spec": [
+                                                {
+                                                    "name": "text",
+                                                    "type": "array"
+                                                }
+                                            ],
+                                            "type": "collection"
+                                        }
+                                    ],
+                                    "type": "collection"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "name": "outputContexts",
+                                "spec": {
+                                    "spec": [
+                                        {
+                                            "name": "name",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "lifespanCount",
+                                            "type": "number"
+                                        },
+                                        {
+                                            "name": "parameters",
+                                            "spec": [
+                                                {
+                                                    "name": "insurance-number",
+                                                    "type": "text"
+                                                },
+                                                {
+                                                    "name": "insurance-number.original",
+                                                    "type": "text"
+                                                },
+                                                {
+                                                    "name": "fever",
+                                                    "spec": {
+                                                        "type": "text"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                {
+                                                    "name": "fever.original",
+                                                    "spec": {
+                                                        "type": "text"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                {
+                                                    "name": "temperature",
+                                                    "type": "text"
+                                                },
+                                                {
+                                                    "name": "temperature.original",
+                                                    "type": "text"
+                                                },
+                                                {
+                                                    "name": "fracture",
+                                                    "spec": {
+                                                        "type": "text"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                {
+                                                    "name": "fracture.original",
+                                                    "spec": {
+                                                        "type": "text"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                {
+                                                    "name": "headInjury",
+                                                    "spec": {
+                                                        "type": "text"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                {
+                                                    "name": "headInjury.original",
+                                                    "spec": {
+                                                        "type": "text"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                {
+                                                    "name": "preCondition",
+                                                    "spec": {
+                                                        "type": "text"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                {
+                                                    "name": "preCondition.original",
+                                                    "spec": {
+                                                        "type": "text"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            ],
+                                            "type": "collection"
+                                        }
+                                    ],
+                                    "type": "collection"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "name": "intent",
+                                "spec": [
+                                    {
+                                        "name": "name",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "displayName",
+                                        "type": "text"
+                                    }
+                                ],
+                                "type": "collection"
+                            },
+                            {
+                                "name": "intentDetectionConfidence",
+                                "type": "number"
+                            },
+                            {
+                                "name": "languageCode",
+                                "type": "text"
+                            }
+                        ],
+                        "type": "collection"
+                    },
+                    {
+                        "name": "originalDetectIntentRequest",
+                        "spec": [
+                            {
+                                "name": "payload",
+                                "spec": [],
+                                "type": "collection"
+                            }
+                        ],
+                        "type": "collection"
+                    },
+                    {
+                        "name": "session",
+                        "type": "text"
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 8,
+            "module": "http:ActionSendData",
+            "version": 3,
+            "parameters": {
+                "handleErrors": false
+            },
+            "mapper": {
+                "ca": "",
+                "qs": [],
+                "url": "https://burrata.herokuapp.com/rest/message",
+                "data": "{\"messageName\":\"firstContact\",\"processVariables\":{\"insuranceNumber\":{\"value\":\"{{1.queryResult.parameters.`insurance-number`}}\", \"type\":\"String\"},\"fever\":{\"value\":\"{{1.queryResult.parameters.fever[]}}\",\"type\":\"String\"},\"temperature\":{\"value\":\"{{1.queryResult.parameters.temperature}}\",\"type\":\"long\"},\"fracture\":{\"value\":\"{{1.queryResult.parameters.fracture[]}}\", \"type\":\"String\"},\"headInjury\":{\"value\":\"{{1.queryResult.parameters.headInjury[]}}\",\"type\":\"String\"},\"preCondition\":{\"value\":\"{{1.queryResult.parameters.preCondition[]}}\", \"type\":\"String\"}}}",
+                "gzip": true,
+                "method": "post",
+                "headers": [],
+                "timeout": "",
+                "authPass": "",
+                "authUser": "",
+                "bodyType": "raw",
+                "contentType": "application/json",
+                "shareCookies": false,
+                "parseResponse": true,
+                "followRedirect": true,
+                "useQuerystring": false,
+                "followAllRedirects": false,
+                "rejectUnauthorized": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": -282,
+                    "y": -243
+                },
+                "restore": {
+                    "qs": {
+                        "mode": "chose",
+                        "items": []
+                    },
+                    "method": {
+                        "mode": "chose",
+                        "label": "POST"
+                    },
+                    "headers": {
+                        "mode": "chose",
+                        "items": []
+                    },
+                    "bodyType": {
+                        "label": "Raw"
+                    },
+                    "contentType": {
+                        "label": "JSON (application/json)"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "handleErrors",
+                        "type": "boolean",
+                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "get",
+                                "head",
+                                "post",
+                                "put",
+                                "patch",
+                                "delete"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers",
+                        "labels": {
+                            "add": "Add a header",
+                            "edit": "Edit a header"
+                        }
+                    },
+                    {
+                        "name": "qs",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Query String",
+                        "labels": {
+                            "add": "Add parameter",
+                            "edit": "Edit parameter"
+                        }
+                    },
+                    {
+                        "name": "bodyType",
+                        "type": "select",
+                        "label": "Body type",
+                        "validate": {
+                            "enum": [
+                                "raw",
+                                "x_www_form_urlencoded",
+                                "multipart_form_data"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "parseResponse",
+                        "type": "boolean",
+                        "label": "Parse response",
+                        "required": true
+                    },
+                    {
+                        "name": "authUser",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "authPass",
+                        "type": "password",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "timeout",
+                        "type": "uinteger",
+                        "label": "Timeout",
+                        "validate": {
+                            "max": 300,
+                            "min": 1
+                        }
+                    },
+                    {
+                        "name": "shareCookies",
+                        "type": "boolean",
+                        "label": "Share cookies with other HTTP modules",
+                        "required": true
+                    },
+                    {
+                        "name": "ca",
+                        "type": "cert",
+                        "label": "Self-signed certificate",
+                        "multiline": true
+                    },
+                    {
+                        "name": "rejectUnauthorized",
+                        "type": "boolean",
+                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                        "required": true
+                    },
+                    {
+                        "name": "followRedirect",
+                        "type": "boolean",
+                        "label": "Follow redirect",
+                        "required": true
+                    },
+                    {
+                        "name": "useQuerystring",
+                        "type": "boolean",
+                        "label": "Disable serialization of multiple same query string keys as arrays",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    },
+                    {
+                        "name": "contentType",
+                        "type": "select",
+                        "label": "Content type",
+                        "validate": {
+                            "enum": [
+                                "text/plain",
+                                "application/json",
+                                "application/xml",
+                                "text/xml",
+                                "text/html",
+                                "custom"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "data",
+                        "type": "buffer",
+                        "label": "Request content"
+                    },
+                    {
+                        "name": "followAllRedirects",
+                        "type": "boolean",
+                        "label": "Follow all redirect",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": false,
+            "sequential": false,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.integromat.com"
+    }
+}
