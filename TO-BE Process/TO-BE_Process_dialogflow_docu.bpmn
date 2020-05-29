@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1jmhc5w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.6.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1jmhc5w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.6.0">
   <bpmn:collaboration id="Collaboration_12uxt0m">
     <bpmn:participant id="Participant_0y8gsc4" name="Dialogflow" processRef="Process_12m9luf" />
     <bpmn:participant id="Participant_1ml7vd2" name="Patient" />
@@ -62,14 +62,14 @@
     <bpmn:sequenceFlow id="SequenceFlow_0emn0fx" name="patient is new" sourceRef="ExclusiveGateway_027crtz" targetRef="Task_1c40out" />
     <bpmn:sequenceFlow id="SequenceFlow_112u4q1" name="patient data stored in DB" sourceRef="ExclusiveGateway_027crtz" targetRef="ExclusiveGateway_1rpbedc" />
     <bpmn:sequenceFlow id="SequenceFlow_0djigbg" sourceRef="Task_1c40out" targetRef="ExclusiveGateway_1rpbedc" />
-    <bpmn:sequenceFlow id="SequenceFlow_01zpytz" sourceRef="ExclusiveGateway_1rpbedc" targetRef="Task_12ekzbh" />
-    <bpmn:sequenceFlow id="SequenceFlow_1ydys3m" sourceRef="ExclusiveGateway_1rpbedc" targetRef="Task_1g92nzg" />
+    <bpmn:sequenceFlow id="SequenceFlow_01zpytz" name="no cosultation needed&#10;&#10;" sourceRef="ExclusiveGateway_1rpbedc" targetRef="Task_12ekzbh" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ydys3m" name="consultation needed" sourceRef="ExclusiveGateway_1rpbedc" targetRef="Task_1g92nzg" />
     <bpmn:sequenceFlow id="SequenceFlow_0dyvip0" sourceRef="Task_12ekzbh" targetRef="EndEvent_0dzp583" />
     <bpmn:sequenceFlow id="SequenceFlow_12r9nnp" sourceRef="Task_1g92nzg" targetRef="EndEvent_0dzp583" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_12uxt0m">
-      <bpmndi:BPMNShape id="Participant_0y8gsc4_di" bpmnElement="Participant_0y8gsc4" isHorizontal="true">
+      <bpmndi:BPMNShape id="Participant_0y8gsc4_di" bpmnElement="Participant_0y8gsc4" isHorizontal="true" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <dc:Bounds x="160" y="249" width="990" height="411" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -123,7 +123,7 @@
         <di:waypoint x="485" y="380" />
         <di:waypoint x="665" y="380" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="459" y="326" width="62" height="27" />
+          <dc:Bounds x="469" y="336" width="62" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0djigbg_di" bpmnElement="SequenceFlow_0djigbg">
@@ -141,11 +141,17 @@
       <bpmndi:BPMNEdge id="SequenceFlow_01zpytz_di" bpmnElement="SequenceFlow_01zpytz">
         <di:waypoint x="715" y="380" />
         <di:waypoint x="770" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="706" y="343" width="68" height="53" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ydys3m_di" bpmnElement="SequenceFlow_1ydys3m">
         <di:waypoint x="690" y="405" />
         <di:waypoint x="690" y="500" />
         <di:waypoint x="890" y="500" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="700" y="456" width="59" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_1ml7vd2_di" bpmnElement="Participant_1ml7vd2" isHorizontal="true">
         <dc:Bounds x="160" y="80" width="990" height="60" />
