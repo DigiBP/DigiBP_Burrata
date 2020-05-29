@@ -14,12 +14,15 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
   console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
  
-  function welcome(agent) {var body=JSON.stringify(request.body);
+    function date(agent) {
+    var body=JSON.stringify(request.body);
     console.log(body);
     let obj = JSON.parse(body);
     let dateTime=obj.queryResult.queryText;
+    let insuranceNumber=obj.queryResult.outputContexts[5].parameters.Insurance_Number;
+    console.log(insuranceNumber);
     let data = '';
-    let url = encodeURI(`https://hook.integromat.com/vqxboiqh8flb8mv1c5ityfg7f8i8pg4l?` + dateTime);
+    let url = encodeURI(`https://hook.integromat.com/vqxboiqh8flb8mv1c5ityfg7f8i8pg4l?dateTime=` + dateTime);
     console.log(url);
 	return new Promise((resolve, reject) => {  
         const request = https.get(url, (res) => {
@@ -27,11 +30,25 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                 data += d;
         var answer=JSON.stringify(data);
         	if (answer.includes('false')){
-           	 	agent.add(`Please propose another date.`);
+           	 	agent.add(`The time slot you entered is not available anymore. Please propose another date.`);
         	}else{
-            	agent.add(`An appoint has bee scheduled for you. Please check your emails for further information.`);
-          		agent.add(`I hope I could help. Get well soon and until next time. Bye.`);
-          	}
+            	agent.add(`An appointment has been scheduled for you. Please check your emails for further information.`);
+              return new Promise((resolve, reject) => {
+              	console.log(`Start process`);
+              	let url = encodeURI(`https://hook.integromat.com/38joojtm894r9ag9mlpc623y1ouu13y4?InsuranceNumber=`+ insuranceNumber  + `&Symptoms=nosymptoms&dateTime=` + dateTime);
+        		const request = https.get(url, (res) => {
+        			res.on('data', (d) => {
+                		data += d;
+                      console.log(`Request sent`);
+                      	agent.intent('Exit Conversation', (conv) => {
+  							conv.close(`I hope I could help. Get well soon and until next time. Good Bye`);
+						});
+        			});
+        			res.on('end', resolve);
+        			});
+        			request.on('error', reject);
+    				});
+        		}
         });
         res.on('end', resolve);
         });
@@ -44,7 +61,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     console.log(body);
     var obj = JSON.parse(body);
     let symptoms=obj.queryResult.queryText;
-    let insuranceNumber=obj.queryResult.outputContexts[1].parameters.Insurance_Number;
+    let insuranceNumber=obj.queryResult.outputContexts[5].parameters.Insurance_Number;
     console.log(insuranceNumber);
     console.log(symptoms);
     let data = '';
@@ -56,17 +73,17 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         console.log(JSON.stringify(data));
         var answer=JSON.stringify(data);
         if (answer.includes('no diagnosis')){
-             agent.add(`Please propose a date when you have time to see a doctor.`);
+             agent.add(`Please propose a date when you have time to see a doctor. The date has to be in the following format: DD/MM/YYYY HH:mm`);
         }else{
-          	agent.add(`Thank you, please check your e-mail to see which further actions are required`);
-    		agent.add(`I hope I could help. Get well soon and until next time. Bye.`);
           	return new Promise((resolve, reject) => {
-              	console.log(`Start process`)
-              	let url = encodeURI(`https://hook.integromat.com/uil8k1wk4scl9f8vbmdf0nkjf7q8ived?InsuranceNumber=`+ insuranceNumber  + `&Symptoms=` + symptoms);
-        		const request = https.get(url, (res) => {
+              	console.log(`Start process`);
+              	let url = encodeURI(`https://hook.integromat.com/38joojtm894r9ag9mlpc623y1ouu13y4?InsuranceNumber=`+ insuranceNumber  + `&Symptoms=` + symptoms + `&dateTime=nodate`);
+        		agent.add(`Thank you, please check your e-mail to see which further actions are required`);
+    			agent.add(`I hope I could help. Get well soon and until next time. Bye.`);
+                console.log(`Request sent`);
+              	const request = https.get(url, (res) => {
         			res.on('data', (d) => {
                 		data += d;
-                      console.log(`Request sent`);
         			});
         			res.on('end', resolve);
         			});
@@ -80,16 +97,12 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     });
   }
   
-  function date(agent) {
-    
-    agent.add(`Thanks`);
-  }
   
   function name(agent){
     var body=JSON.stringify(request.body);
     console.log(body);
     var obj = JSON.parse(body);
-    let insuranceNumber=obj.queryResult.outputContexts[2].parameters.Insurance_Number;
+    let insuranceNumber=obj.queryResult.outputContexts[6].parameters.Insurance_Number;
     console.log(insuranceNumber);
     let surname=obj.queryResult.parameters.givenname;
     let lastname=obj.queryResult.parameters.lastname;
@@ -124,7 +137,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     let insuranceNumber=obj.queryResult.parameters.Insurance_Number;
     console.log(insuranceNumber);
 	let data = '';
-    let url = `https://hook.integromat.com/q93g5xzffvnuyoevnptsxeptgrv7caa3?InsuranceNumber=` + insuranceNumber;
+    let url = `https://hook.integromat.com/eyucscywke51f6tnpjmapr5h6t2lcd1q?InsuranceNumber=` + insuranceNumber;
 	return new Promise((resolve, reject) => {  
         const request = https.get(url, (res) => {
         res.on('data', (d) => {
@@ -137,7 +150,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
             	agent.add(`Looks like we have never met before. Please tell me your full name.`);
             }else{
           		if (bodyTemp > 39 || fracture === 'yes' || precon === 'yes' || headInj === 'yes'){
-              		agent.add(`Hi ` + name + `, please propose a date when you have time to see a doctor.`);
+              		agent.add(`Hi ` + name + `, please propose a date when you have time to see a doctor. The date has to be in the following format: DD/MM/YYYY HH:mm`);
            		}else{
       				agent.add(`Hi ` + name + `, please tell me your symptoms.`);
             	}
@@ -156,8 +169,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
-  intentMap.set('Default Welcome Intent', welcome);
-  intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('Identification', identification);
   intentMap.set('Symptoms', symptoms);
   intentMap.set('Date', date);
