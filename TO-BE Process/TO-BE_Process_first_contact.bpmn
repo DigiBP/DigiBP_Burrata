@@ -398,7 +398,7 @@ prescriptionNeeded=object.PrescriptionNeeded;</camunda:script>
         <dc:Bounds x="1100" y="620" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0i5lxwd_di" bpmnElement="Participant_19hreyu" isHorizontal="true">
-        <dc:Bounds x="160" y="240" width="1380" height="60" />
+        <dc:Bounds x="160" y="240" width="1390" height="60" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_1vlhfb0_di" bpmnElement="MessageFlow_1vlhfb0">
         <di:waypoint x="250" y="140" />
