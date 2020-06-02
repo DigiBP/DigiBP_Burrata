@@ -83,6 +83,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         console.log(JSON.stringify(data));
         var answer=JSON.stringify(data);
         if (answer.includes('no diagnosis')){
+          	 agent.add(`Sorry I could determine a diagnosis.`);
              agent.add(`Please propose a date when you have time to see a doctor. The date has to be in the following format: DD/MM/YYYY HH:mm`);
         }else{
           	return new Promise((resolve, reject) => {
@@ -186,7 +187,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   // asks the user to provide a date or the symptoms depending on the input
   function consultationNeededPrompt(agent, name, fever, precon, headInj, fracture){
 		if (consultationNeeded(fever, precon, headInj, fracture)){
-             agent.add(`Hi ` + name + `, please propose a date when you have time to see a doctor. The date has to be in the following format: DD/MM/YYYY HH:mm`);
+             agent.add(`Hi ` + name + `, one of your preconditions requires you to see a doctor.
+				Please propose a date. The date has to be in the following format: DD/MM/YYYY HH:mm`);
         }else{
       		agent.add(`Hi ` + name + `, please tell me your symptoms.`);
         }
