@@ -2,11 +2,11 @@
     "name": "Get Diagnosis",
     "flow": [
         {
-            "id": 1,
+            "id": 10,
             "module": "gateway:CustomWebHook",
             "version": 1,
             "parameters": {
-                "hook": 363880,
+                "hook": 400746,
                 "maxResults": 2
             },
             "mapper": {},
@@ -35,23 +35,7 @@
                 ],
                 "interface": [
                     {
-                        "name": "Symptom1",
-                        "type": "text"
-                    },
-                    {
-                        "name": "Symptom2",
-                        "type": "text"
-                    },
-                    {
-                        "name": "Symptom3",
-                        "type": "text"
-                    },
-                    {
-                        "name": "Symptom4",
-                        "type": "text"
-                    },
-                    {
-                        "name": "Symptom5",
+                        "name": "Symptoms",
                         "type": "text"
                     }
                 ]
@@ -62,7 +46,7 @@
             "module": "google-sheets:filterRows",
             "version": 2,
             "parameters": {
-                "__IMTCONN__": 1135136
+                "__IMTCONN__": 1152718
             },
             "mapper": {
                 "limit": "1",
@@ -70,14 +54,14 @@
                     [
                         {
                             "a": "C",
-                            "b": "{{1.Symptom1}};{{1.Symptom2}};{{1.Symptom3}};{{1.Symptom4}};{{1.Symptom5}}",
-                            "o": "text:equal:ci"
+                            "b": "{{10.Symptoms}}",
+                            "o": "text:contain:ci"
                         }
                     ]
                 ],
-                "sheetId": "DetailledDiagnosis - Kevin",
+                "sheetId": "DetailledDiagnosis",
                 "sortOrder": "asc",
-                "spreadsheetId": "1uSmTeJnqbJVXbpa7dm8LQsH-BlIwQ-0_-VpWshq6m6Q",
+                "spreadsheetId": "1nGfcBENayMhjTgXpXD0P2MpnLcZlbSYaYKl496OxusE",
                 "tableFirstRow": "A1:CZ1",
                 "includesHeaders": true,
                 "valueRenderOption": "FORMATTED_VALUE",
@@ -95,18 +79,18 @@
                     },
                     "sheetId": {
                         "mode": "chose",
-                        "label": "DetailledDiagnosis - Kevin"
+                        "label": "DetailledDiagnosis"
                     },
                     "sortOrder": {
                         "mode": "chose",
                         "label": "Ascending"
                     },
                     "__IMTCONN__": {
-                        "label": "read-patient-data (kevin.saner91@gmail.com)"
+                        "label": "Burrata (burrata.digibp.bot@gmail.com)"
                     },
                     "spreadsheetId": {
                         "mode": "chose",
-                        "label": "BurrataTest"
+                        "label": "DigiBP - Medical Chat Bot"
                     },
                     "tableFirstRow": {
                         "label": "A-CZ"
@@ -227,16 +211,6 @@
                     }
                 ],
                 "interface": [
-                    {
-                        "name": "__IMTLENGTH__",
-                        "type": "uinteger",
-                        "label": "Total number of bundles"
-                    },
-                    {
-                        "name": "__IMTINDEX__",
-                        "type": "uinteger",
-                        "label": "Bundle order position"
-                    },
                     {
                         "name": "__ROW_NUMBER__",
                         "type": "number",
@@ -807,7 +781,7 @@
                                 ]
                             },
                             "mapper": {
-                                "body": "{\n\"StandardAnswer\": \"could not determine diagnosis\"\n}",
+                                "body": "{\n\"StandardAnswer\": \"no diagnosis\"\n}",
                                 "status": "200",
                                 "headers": [
                                     {
@@ -982,7 +956,14 @@
             "dlq": false
         },
         "designer": {
-            "orphans": []
+            "orphans": [],
+            "notes": [
+                {
+                    "id": 6,
+                    "text": "The implemented logic is not very powerful. The input \"Symptoms\" has to match, a line in the google sheet to determine the correct diagnosis.\nKeep this in mind when testing from Dialogflow.\n",
+                    "filter": false
+                }
+            ]
         },
         "zone": "eu1.integromat.com"
     }
