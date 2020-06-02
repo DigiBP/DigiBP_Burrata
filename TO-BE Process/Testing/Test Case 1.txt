@@ -1,0 +1,40 @@
+User Story 1: Issue prescription
+
+User: 	 	Tony Stark - known patient
+Precondition:	none
+Symptom:	Headache
+
+
+The following input in neccessary to reproduce user story 1:
+
+Dialogflow:
+
+Input:
+
+756.6605.0151.67
+
+37
+
+no
+
+no
+
+no
+
+Headache
+
+---------------------------------------------------------------
+
+Camunda Login as Doctor/doctor
+
+Click approved flag
+
+Sign the prescrption with the name
+
+Complete the task
+
+---------------------------------------------------------------
+
+Output:
+
+An email is sent to the patient with prescription info that is signed.

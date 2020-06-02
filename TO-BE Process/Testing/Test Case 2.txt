@@ -1,0 +1,37 @@
+User Story 2: Consultation
+
+User: 	 	Natascha Romanov - new patient
+Precondition:	yes - medical precondition
+Symptom:	irrelevant - none
+
+
+The following input in neccessary to reproduce user story 1:
+
+Dialogflow:
+
+Input:
+
+756.6605.0151.64
+
+37
+
+no
+
+yes
+
+no
+
+Natascha Romanov
+
+To receive the mail: Type in your own email address
+
+10/06/1982
+
+12/06/2020 15:15
+
+------------------------------------------------------
+
+Output:
+
+Patient receives a mail and meeting invitation. Doctors
+calender is updated with the appointment.
