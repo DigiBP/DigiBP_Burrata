@@ -29,7 +29,7 @@ Camunda Login as Doctor/doctor
 
 Click approved flag
 
-Sign the prescrption with the name
+Sign the prescription with the name
 
 Complete the task
 
